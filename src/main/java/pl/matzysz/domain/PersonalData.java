@@ -2,6 +2,7 @@ package pl.matzysz.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "personal_data")
@@ -15,11 +16,14 @@ public class PersonalData {
     private User user;
 
     @NotNull
+    @Size(min = 1, max = 50)
     private String firstName;
 
+    @Size(min = 1, max = 50)
     private String secondName;
 
     @NotNull
+    @Size(min = 1, max = 50)
     private String lastName;
 
 

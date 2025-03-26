@@ -1,6 +1,8 @@
 package pl.matzysz.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "roles")
@@ -9,6 +11,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull
+    @Size(min = 6, max = 50)
     private String role;
 
 

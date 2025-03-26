@@ -2,6 +2,7 @@ package pl.matzysz.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,9 +25,11 @@ public class Company {
     private boolean active;
 
     @NotNull
+    @Size(min = 1, max = 50)
     private String companyName;
 
     @NotNull
+    @Size(min = 1, max = 50)
     private String nip;
 
     @NotNull

@@ -2,6 +2,7 @@ package pl.matzysz.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "addresses")
@@ -11,22 +12,29 @@ public class Address {
     private long id;
 
     @NotNull
+    @Size(min = 1, max = 50)
     private String country;
 
     @NotNull
+    @Size(min = 1, max = 50)
     private String state;
 
     @NotNull
+    @Size(min = 1, max = 50)
     private String city;
 
     @NotNull
+    @Size(min = 1, max = 50)
     private String zipCode;
 
     @NotNull
+    @Size(min = 1, max = 50)
     private String street;
 
+    @Size(min = 1, max = 50)
     private String streetAdditional1;
 
+    @Size(min = 1, max = 50)
     private String streetAdditional2;
 
 

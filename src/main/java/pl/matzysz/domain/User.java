@@ -2,6 +2,7 @@ package pl.matzysz.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +15,7 @@ public class User {
     private long id;
 
     @NotNull
+    @Size(min = 1, max = 100)
     private String email;
 
     @NotNull

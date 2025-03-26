@@ -2,6 +2,7 @@ package pl.matzysz.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "aircrafts")
@@ -11,6 +12,7 @@ public class Aircraft {
     private long id;
 
     @NotNull
+    @Size(min = 1, max = 50)
     private String model;
 
     public long getId() { return id; }
