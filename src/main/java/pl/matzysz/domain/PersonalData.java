@@ -22,4 +22,19 @@ public class PersonalData {
     @NotNull
     private String lastName;
 
+
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public String getSecondName() { return secondName; }
+    public void setSecondName(String secondName) { this.secondName = secondName; }
+
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 }

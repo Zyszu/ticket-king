@@ -41,4 +41,28 @@ public class Company {
     )
     private Set<Aircraft> aircraft = new HashSet<>(0);
 
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
+
+    public User getOwnerId() { return ownerId; }
+    public void setOwnerId(User ownerId) { this.ownerId = ownerId; }
+
+    public boolean isVerified() { return verified; }
+    public void setVerified(boolean verified) { this.verified = verified; }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
+
+    public String getCompanyName() { return companyName; }
+    public void setCompanyName(String companyName) { this.companyName = companyName; }
+
+    public String getNip() { return this.nip; }
+    public void setNip(String nip) { this.nip = nip;  }
+
+    public Address getAddress() { return address; }
+    public void setAddress(Address address) { this.address = address; }
+
+    public Set<Aircraft> getAircraftList() { return aircraft; }
+    public void setAircraftList(Set<Aircraft> aircraftList) { this.aircraft = aircraftList; }
+
 }
