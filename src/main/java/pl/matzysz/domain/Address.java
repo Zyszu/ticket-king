@@ -31,10 +31,10 @@ public class Address {
     @Size(min = 1, max = 50)
     private String street;
 
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     private String streetAdditional1;
 
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     private String streetAdditional2;
 
 

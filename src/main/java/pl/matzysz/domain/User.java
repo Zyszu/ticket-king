@@ -16,6 +16,7 @@ public class User {
 
     @NotNull
     @Size(min = 1, max = 100)
+    @Column(unique = true)
     private String email;
 
     @NotNull
