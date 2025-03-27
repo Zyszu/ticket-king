@@ -10,16 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.matzysz.repository.UserRepository;
 import pl.matzysz.service.UserService;
 
 @Controller
-@RequestMapping("/register")
-public class RegisterController {
+@RequestMapping("/register-user")
+public class RegisterUserController {
 
     private final UserService userService;
 
-    public RegisterController(UserService userService) {
+    public RegisterUserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -29,13 +28,13 @@ public class RegisterController {
         User user = new User();
         user.setAddress(new Address());
         model.addAttribute("user", new User());
-        return "register";
+        return "register-user";
     }
 
     @PostMapping
     public String register(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "register";
+            return "register-user";
         }
 
         // Debugging output
@@ -48,7 +47,7 @@ public class RegisterController {
         );
 
         userService.addUser(user);
-        return "redirect:register";
+        return "redirect:register-user";
     }
 
 }

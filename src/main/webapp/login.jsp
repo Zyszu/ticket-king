@@ -22,8 +22,12 @@
 <%--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
   </form>
 
-  <a href="/register">
+  <a href="/register-user">
     don't have an accoutn? Register now!
+  </a>
+
+  <a href="/register-company">
+    Make a company now!
   </a>
 
 </body>

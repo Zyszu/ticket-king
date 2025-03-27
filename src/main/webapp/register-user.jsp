@@ -14,7 +14,7 @@
     <title>Title</title>
 </head>
 <body>
-  <form:form method="post" action="register" modelAttribute="user">
+  <form:form method="post" action="register-user" modelAttribute="user">
     <form:hidden path="id" />
 
     <!-- Email -->

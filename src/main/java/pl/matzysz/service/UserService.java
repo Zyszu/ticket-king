@@ -10,7 +10,7 @@ public interface UserService {
     public void addUser(User user);
     public void editUser(User user);
     public List<User> listUser();
-    public void removeUser(long id);
+    public void deleteUser(long id);
     public User getUser(long id);
     public User getUserByEmail(String email);
 

@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void removeUser(long id) {
+    public void deleteUser(long id) {
         userRepository.deleteById(id);
     }
 

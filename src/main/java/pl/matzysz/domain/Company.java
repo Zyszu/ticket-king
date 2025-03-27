@@ -16,7 +16,7 @@ public class Company {
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
-    private User ownerId;
+    private User owner;
 
     @NotNull
     private boolean verified;
@@ -26,6 +26,7 @@ public class Company {
 
     @NotNull
     @Size(min = 1, max = 50)
+    @Column(unique = true)
     private String companyName;
 
     @NotNull
@@ -47,8 +48,8 @@ public class Company {
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
-    public User getOwnerId() { return ownerId; }
-    public void setOwnerId(User ownerId) { this.ownerId = ownerId; }
+    public User getOwner() { return owner; }
+    public void setOwner(User owner) { this.owner = owner; }
 
     public boolean isVerified() { return verified; }
     public void setVerified(boolean verified) { this.verified = verified; }
