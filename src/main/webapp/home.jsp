@@ -15,5 +15,7 @@
     <a href="/login">
         login
     </a>
+
+    <a href="/fleet">Register fleet</a>
 </body>
 </html>

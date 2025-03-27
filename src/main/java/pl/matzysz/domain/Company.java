@@ -37,13 +37,10 @@ public class Company {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "fleet", // Custom join table name
-            joinColumns = @JoinColumn(name = "company_id"),
-            inverseJoinColumns = @JoinColumn(name = "aircraft_id")
-    )
-    private Set<Aircraft> aircraft = new HashSet<>(0);
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id") // this tells JPA where to store the foreign key
+    private Set<Aircraft> aircraftList = new HashSet<>();
+
 
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
@@ -66,7 +63,7 @@ public class Company {
     public Address getAddress() { return address; }
     public void setAddress(Address address) { this.address = address; }
 
-    public Set<Aircraft> getAircraftList() { return aircraft; }
-    public void setAircraftList(Set<Aircraft> aircraftList) { this.aircraft = aircraftList; }
+    public Set<Aircraft> getAircraftList() { return aircraftList; }
+    public void setAircraftList(Set<Aircraft> aircraftList) { this.aircraftList = aircraftList; }
 
 }

@@ -4,9 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "flights")
@@ -25,7 +24,7 @@ public class Flight {
     private int availableSeats;
 
     @NotNull
-    private Timestamp departure;
+    private LocalDateTime departure;
 
     @NotNull
     private String airfieldFrom;
@@ -45,8 +44,8 @@ public class Flight {
     public int getAvailableSeats() { return availableSeats; }
     public void setAvailableSeats(int availableSeats) { this.availableSeats = availableSeats; }
 
-    public Timestamp getDeparture() { return departure; }
-    public void setDeparture(Timestamp departure) { this.departure = departure; }
+    public LocalDateTime getDeparture() { return departure; }
+    public void setDeparture(LocalDateTime departure) { this.departure = departure; }
 
     public String getAirfieldFrom() { return airfieldFrom; }
     public void setAirfieldFrom(String airfieldFrom) { this.airfieldFrom = airfieldFrom; }
