@@ -25,8 +25,6 @@ public class RegisterUserController {
     @GetMapping
     public String index(Model model, HttpServletRequest request) {
 
-        User user = new User();
-        user.setAddress(new Address());
         model.addAttribute("user", new User());
         return "register-user";
     }
@@ -36,15 +34,6 @@ public class RegisterUserController {
         if (bindingResult.hasErrors()) {
             return "register-user";
         }
-
-        // Debugging output
-        System.out.println(
-                "Email: " + user.getEmail() +
-                        " | Country: " + user.getAddress().getCountry() +
-                        " | State: " + user.getAddress().getState() +
-                        " | City: " + user.getAddress().getCity() +
-                        " | ZipCode: " + user.getAddress().getZipCode()
-        );
 
         userService.addUser(user);
         return "redirect:register-user";

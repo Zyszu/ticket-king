@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Register user</title>
 </head>
 <body>
   <form:form method="post" action="register-user" modelAttribute="user">
@@ -26,39 +26,6 @@
     <label for="password">Password</label>
     <form:password path="password" class="input-field" />
     <form:errors path="password" />
-
-    <!-- Address Fields -->
-    <fieldset>
-      <legend>Address</legend>
-
-      <label for="address.country">Country</label>
-      <form:input path="address.country" class="input-field" />
-      <form:errors path="address.country" />
-
-      <label for="address.state">State</label>
-      <form:input path="address.state" class="input-field" />
-      <form:errors path="address.state" />
-
-      <label for="address.city">City</label>
-      <form:input path="address.city" class="input-field" />
-      <form:errors path="address.city" />
-
-      <label for="address.zipCode">Zip Code</label>
-      <form:input path="address.zipCode" class="input-field" />
-      <form:errors path="address.zipCode" />
-
-      <label for="address.street">Street</label>
-      <form:input path="address.street" class="input-field" />
-      <form:errors path="address.street" />
-
-      <label for="address.streetAdditional1">Street Additional 1</label>
-      <form:input path="address.streetAdditional1" class="input-field" />
-      <form:errors path="address.streetAdditional1" />
-
-      <label for="address.streetAdditional2">Street Additional 2</label>
-      <form:input path="address.streetAdditional2" class="input-field" />
-      <form:errors path="address.streetAdditional2" />
-    </fieldset>
 
     <button type="submit">Register</button>
   </form:form>

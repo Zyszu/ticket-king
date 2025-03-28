@@ -12,10 +12,6 @@ public class PersonalData {
     private long id;
 
     @NotNull
-    @OneToOne(fetch = FetchType.EAGER)
-    private User user;
-
-    @NotNull
     @Size(min = 1, max = 50)
     private String firstName;
 
@@ -26,12 +22,11 @@ public class PersonalData {
     @Size(min = 1, max = 50)
     private String lastName;
 
+    @OneToOne(mappedBy = "personalData")
+    private User user;
 
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
-
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
@@ -41,4 +36,8 @@ public class PersonalData {
 
     public String getLastName() { return lastName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+
 }

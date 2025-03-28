@@ -37,6 +37,9 @@ public class Address {
     @Size(max = 50)
     private String streetAdditional2;
 
+    @OneToOne(mappedBy = "address")
+    private User user;
+
 
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
@@ -61,4 +64,8 @@ public class Address {
 
     public String getStreetAdditional2() { return streetAdditional2; }
     public void setStreetAdditional2(String streetAdditional2) { this.streetAdditional2 = streetAdditional2; }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+
 }

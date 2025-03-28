@@ -22,9 +22,13 @@ public class User {
     @NotNull
     private String password;
 
-    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private Address address;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "personal_data_id")
+    private PersonalData personalData;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>(0);
@@ -49,6 +53,9 @@ public class User {
 
     public Address getAddress() { return address; }
     public void setAddress(Address address) { this.address = address; }
+
+    public PersonalData getPersonalData() { return personalData; }
+    public void setPersonalData(PersonalData personalData) { this.personalData = personalData; }
 
     public Set<Role> getRoles() { return roles; }
     public void setRoles(Set<Role> roles) { this.roles = roles; }

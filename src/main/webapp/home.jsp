@@ -14,13 +14,19 @@
 </head>
 <body>
     <h1>Hello!</h1>
-    <a href="/login">
-        login
-    </a>
+    <a href="/login"> login </a>
+    <br />
+    <a href="/register-user"> Register user </a>
+    <br />
+    <a href="/register-company"> Register company </a>
     <br />
     <a href="/fleet">Register fleet</a>
     <br />
     <a href="/flights">Register flight!!!</a>
+    <br />
+    <a href="/personal-data">Register personal data</a>
+    <br />
+    <a href="/address">Register address</a>
 
     <c:if test="${not empty flightList}">
         <h2>Existing Flights</h2>
