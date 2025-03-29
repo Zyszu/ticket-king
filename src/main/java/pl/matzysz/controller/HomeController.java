@@ -10,7 +10,7 @@ import pl.matzysz.service.FlightService;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/")
+@RequestMapping(value = "/home")
 public class HomeController {
 
     private final FlightService flightService;

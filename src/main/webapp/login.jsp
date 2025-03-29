@@ -10,25 +10,17 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
-  <form name='loginForm' action="<c:url value='/login' />" method='POST'>
-    <input type="text" name="email" class="input-field" placeholder="email" required />
+  <form name='loginForm' action="login" method='POST'>
+    <input type="text" name="login" class="input-field" placeholder="email" required />
     <input type="password" name="password" class="input-field" placeholder="password" required />
     <button type="submit" class="btn-primary">Login</button>
 
     <!-- CSRF Token -->
-<%--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
   </form>
-
-  <a href="/register-user">
-    don't have an accoutn? Register now!
-  </a>
-
-  <a href="/register-company">
-    Make a company now!
-  </a>
 
 </body>
 </html>
