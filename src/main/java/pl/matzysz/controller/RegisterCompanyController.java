@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.matzysz.domain.Address;
 import pl.matzysz.domain.Company;
 import pl.matzysz.domain.User;
+import pl.matzysz.repository.CompanyRepository;
 import pl.matzysz.repository.UserRepository;
 import pl.matzysz.service.CompanyService;
 import pl.matzysz.service.UserService;
@@ -29,13 +30,15 @@ public class RegisterCompanyController {
 
     private final CompanyService companyService;
     private final UserRepository userRepository;
+    private final CompanyRepository companyRepository;
 
     public RegisterCompanyController(
             CompanyService companyService,
-            UserRepository userRepository
-    ) {
+            UserRepository userRepository,
+            CompanyRepository companyRepository) {
         this.companyService = companyService;
         this.userRepository = userRepository;
+        this.companyRepository = companyRepository;
     }
 
     @GetMapping
@@ -77,9 +80,14 @@ public class RegisterCompanyController {
         company.setActive(false);
         company.setVerified(false);
         company.setOwner(user);
-        companyService.addCompany(company);
 
-        return "redirect:/force-logout";
+        if (companyRepository.findById(company.getId()) == null) {
+            companyService.addCompany(company);
+            return "redirect:/force-logout";
+        }
+
+        companyService.editCompany(company);
+        return "redirect:/home";
     }
 
 
