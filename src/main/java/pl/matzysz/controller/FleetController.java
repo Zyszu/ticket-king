@@ -18,17 +18,16 @@ import java.security.Principal;
 @RequestMapping("fleet")
 public class FleetController {
 
-    private final AircraftService aircraftService;
     private final CompanyService companyService;
     private final UserService userService;
+    private final AircraftService aircraftService;
 
     public FleetController(
-            AircraftService aircraftService,
             CompanyService companyService,
-            UserService userService) {
-        this.aircraftService = aircraftService;
+            UserService userService, AircraftService aircraftService) {
         this.companyService = companyService;
         this.userService = userService;
+        this.aircraftService = aircraftService;
     }
 
     @GetMapping
@@ -64,15 +63,14 @@ public class FleetController {
         if (user == null) {
             return "redirect:/home"; // + errors
         }
-        Company company = user.getCompany();
 
+        Company company = user.getCompany();
         if (company == null) {
             return "redirect:/home"; // + errors
         }
+        aircraft.setCompany(company);
 
-        company.getAircraftList().add(aircraft);
-        companyService.editCompany(company);
-
+        aircraftService.addAircraft(aircraft);
         return "redirect:/fleet";
     }
 

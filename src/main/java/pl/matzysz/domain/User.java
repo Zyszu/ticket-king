@@ -33,17 +33,11 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>(0);
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "tickets", // Custom join table name
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "flight_id")
-    )
-    private Set<Flight> flights = new HashSet<>(0);
-
     @OneToOne(mappedBy = "owner")
     private Company company;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<Ticket>  ticketList = new HashSet<>(0);
 
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
@@ -63,10 +57,10 @@ public class User {
     public Set<Role> getRoles() { return roles; }
     public void setRoles(Set<Role> roles) { this.roles = roles; }
 
-    public Set<Flight> getFlights() { return flights; }
-    public void setFlights(Set<Flight> flights) { this.flights = flights; }
-
     public Company getCompany() { return company; }
     public void setCompany(Company company) { this.company = company; }
+
+    public Set<Ticket> getTicketList() { return ticketList; }
+    public void setTicketList(Set<Ticket> ticketList) { this.ticketList = ticketList; }
 
 }

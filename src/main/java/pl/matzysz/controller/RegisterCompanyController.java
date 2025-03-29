@@ -26,15 +26,13 @@ public class RegisterCompanyController {
 
     private final CompanyService companyService;
     private final UserRepository userRepository;
-    private final UserService userService;
 
     public RegisterCompanyController(
             CompanyService companyService,
-            UserRepository userRepository,
-            UserService userService) {
+            UserRepository userRepository
+    ) {
         this.companyService = companyService;
         this.userRepository = userRepository;
-        this.userService = userService;
     }
 
     @GetMapping

@@ -33,6 +33,9 @@
 
         <br />
         <a href="/address">Register address</a>
+
+        <br />
+        <a href="/tickets/wallet">Wallet</a>
     </sec:authorize>
 
     <sec:authorize access="hasRole('ROLE_PROPRIETOR')">

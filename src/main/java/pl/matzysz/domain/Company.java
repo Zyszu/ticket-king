@@ -41,6 +41,9 @@ public class Company {
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Aircraft> aircraftList = new HashSet<>(0);
 
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    Set<Ticket> ticketList =  new HashSet<>(0);
+
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
@@ -64,5 +67,8 @@ public class Company {
 
     public Set<Aircraft> getAircraftList() { return aircraftList; }
     public void setAircraftList(Set<Aircraft> aircraftList) { this.aircraftList = aircraftList; }
+
+    public Set<Ticket> getTicketList() { return ticketList; }
+    public void setTicketList(Set<Ticket> ticketList) { this.ticketList = ticketList; }
 
 }

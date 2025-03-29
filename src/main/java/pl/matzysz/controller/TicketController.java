@@ -5,10 +5,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.matzysz.domain.Company;
 import pl.matzysz.domain.Flight;
+import pl.matzysz.domain.Ticket;
 import pl.matzysz.domain.User;
+import pl.matzysz.repository.TicketRepository;
 import pl.matzysz.repository.UserRepository;
 import pl.matzysz.service.CompanyService;
 import pl.matzysz.service.FlightService;
+import pl.matzysz.service.TicketService;
 import pl.matzysz.service.UserService;
 
 import java.security.Principal;
@@ -23,17 +26,18 @@ public class TicketController {
     private final FlightService flightService;
     private final UserService userService;
     private final CompanyService companyService;
-    private final UserRepository userRepository;
+    private final TicketService ticketService;
 
     public TicketController(
             FlightService flightService,
             UserService userService,
             CompanyService companyService,
-            UserRepository userRepository) {
+            TicketService ticketService
+    ) {
         this.flightService = flightService;
         this.userService = userService;
         this.companyService = companyService;
-        this.userRepository = userRepository;
+        this.ticketService = ticketService;
     }
 
     @GetMapping(value = "/purchase/{flightId}")
@@ -61,11 +65,11 @@ public class TicketController {
             return "redirect:/home"; // + errors [proprietor can't buy ticket for own flight]
         }
 
-        Integer passengersCount = flight.getPassengers().size();
-        flight.setPassengers(null);
+        Integer ticketCount = flight.getTicketList().size();
+        flight.setTicketList(null);
 
         model.addAttribute("flight", flight);
-        model.addAttribute("seatsTaken", passengersCount);
+        model.addAttribute("seatsTaken", ticketCount);
         return "buy-ticket";
     }
 
@@ -74,13 +78,21 @@ public class TicketController {
             Model model,
             Principal principal
     ) {
+        User user = userService.getUserByEmail(principal.getName());
+        if (user == null) {
+            return "redirect:/home"; // + errors
+        }
+
+        Set<Ticket> ticketList = user.getTicketList();
+        model.addAttribute("ticketList", ticketList);
+
         return "wallet";
     }
 
     @PostMapping(value = "/purchase")
     public String purchase(
             @ModelAttribute("flightId") Long flightId,
-            @ModelAttribute("ticketCount") Integer ticketCount,
+            @ModelAttribute("ticketCount") Integer purchaseTicketCount,
             Model model,
             Principal principal
     ) {
@@ -104,15 +116,24 @@ public class TicketController {
         }
 
         // check if there are enough empty seats left
-        Integer passengersCount = flight.getPassengers().size();
-        if (passengersCount + ticketCount > flight.getAvailableSeats()) {
+        int ticketCount = flight.getTicketList().size();
+        if (ticketCount + purchaseTicketCount > flight.getAvailableSeats()) {
             return "redirect:/home"; // + errors [not enough tickets left]
         }
 
-        for (int i = 0; i < ticketCount; i++) {
-            user.getFlights().add(flight);
+        List<Ticket> ticketList = new ArrayList<>(0);
+
+        for (int i = 0; i < purchaseTicketCount; i++) {
+            Ticket ticket = new Ticket();
+            ticket.setFlight(flight);
+            ticket.setUser(user);
+            ticket.setCompany(company);
+
+            ticketList.add(ticket);
         }
-        userService.editUser(user);
+
+        ticketService.createManyTickets(ticketList);
+
         return "redirect:/tickets/purchase/" + flightId;
     }
 
