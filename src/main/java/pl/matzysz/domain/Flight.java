@@ -6,6 +6,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "flights")
@@ -35,6 +39,10 @@ public class Flight {
     @NotNull
     private float pricePerTicket;
 
+    @ManyToMany(mappedBy = "flights", fetch = FetchType.EAGER)
+    private Set<User> passengers = new HashSet<>(0);
+
+
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
@@ -55,5 +63,8 @@ public class Flight {
 
     public float getPricePerTicket() { return pricePerTicket; }
     public void setPricePerTicket(float pricePerTicket) { this.pricePerTicket = pricePerTicket; }
+
+    public Set<User> getPassengers() { return passengers; }
+    public void setPassengers(Set<User> passengers) { this.passengers = passengers; }
 
 }

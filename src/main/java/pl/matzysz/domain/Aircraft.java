@@ -15,8 +15,10 @@ public class Aircraft {
     @Size(min = 1, max = 50)
     private String model;
 
-    @Transient // optional — explained below
-    private Long companyId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id") // owns the FK
+    private Company company;
 
 
     public long getId() { return id; }
@@ -25,6 +27,6 @@ public class Aircraft {
     public String getModel() { return model; }
     public void setModel(String model) { this.model = model; }
 
-    public Long getCompanyId() { return companyId; }
-    public void setCompanyId(Long companyId) { this.companyId = companyId; }
+    public Company getCompany() { return company; }
+    public void setCompany(Company company) { this.company = company; }
 }

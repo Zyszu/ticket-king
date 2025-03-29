@@ -67,8 +67,12 @@
                 <th>From</th>
                 <th>To</th>
                 <th>Seats</th>
+                <th>Empty seats</th>
                 <th>Departure At</th>
                 <th>Price per Seat</th>
+                <sec:authorize access="hasRole('ROLE_USER')">
+                    <th>Options</th>
+                </sec:authorize>
             </tr>
             </thead>
             <tbody>
@@ -79,8 +83,16 @@
                     <td>${flight.airfieldFrom}</td>
                     <td>${flight.airfieldTo}</td>
                     <td>${flight.availableSeats}</td>
+                    <td>all</td>
                     <td>${flight.departure}</td>
                     <td>${flight.pricePerTicket}</td>
+                    <sec:authorize access="hasRole('ROLE_USER')">
+                        <td>
+                            <a href="tickets/purchase/${flight.id}">
+                                buy a ticket
+                            </a>
+                        </td>
+                    </sec:authorize>
                 </tr>
             </c:forEach>
             </tbody>

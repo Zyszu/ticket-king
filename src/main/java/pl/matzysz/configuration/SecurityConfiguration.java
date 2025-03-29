@@ -58,6 +58,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/personal-data**").hasAnyRole("USER")
                         .requestMatchers("/address**").hasAnyRole("USER")
                         .requestMatchers("/register-company**").hasAnyRole("USER")
+                        .requestMatchers("/tickets**").hasAnyRole("USER")
                         // permit proprietors
                         .requestMatchers("/fleet**").hasAnyRole("PROPRIETOR")
                         .requestMatchers("/flights**").hasAnyRole("PROPRIETOR")

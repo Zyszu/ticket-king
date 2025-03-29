@@ -38,10 +38,8 @@ public class Company {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id") // this tells JPA where to store the foreign key
-    private Set<Aircraft> aircraftList = new HashSet<>();
-
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Aircraft> aircraftList = new HashSet<>(0);
 
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
