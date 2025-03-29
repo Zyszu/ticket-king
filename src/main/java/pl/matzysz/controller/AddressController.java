@@ -9,6 +9,8 @@ import pl.matzysz.domain.User;
 import pl.matzysz.service.AddressService;
 import pl.matzysz.service.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/address")
 public class AddressController {
@@ -23,26 +25,37 @@ public class AddressController {
     }
 
     @GetMapping
-    public String showAddressForm(Model model) {
-        model.addAttribute("address", new Address());
+    public String showAddressForm(
+            Model model,
+            Principal principal
+    ) {
+        User user = userService.getUserByEmail(principal.getName());
+        if (user == null) {
+            return "redirect:/home"; // + errors
+        }
+
+        if (user.getAddress() != null) {
+            model.addAttribute("address", user.getAddress());
+        } else {
+            model.addAttribute("address", new Address());
+        }
+
         return "address";
     }
 
     @PostMapping
     public String saveAddress(
             @ModelAttribute("address") Address address,
-            @RequestParam("userId") Long userId
+            Principal principal
     ) {
 
-        User user = userService.getUser(userId); // assume this fetches a User entity
-
-        if (user != null) {
-            user.setAddress(address);
-            userService.editUser(user);
-        } else {
-            // optionally handle invalid user ID
-            System.out.println("Invalid user ID: " + userId);
+        User user = userService.getUserByEmail(principal.getName());
+        if (user == null) {
+            return "redirect:/home"; // + errors
         }
+
+        user.setAddress(address);
+        userService.editUser(user);
 
         return "redirect:/address";
     }

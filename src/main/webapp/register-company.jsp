@@ -60,15 +60,6 @@
     <form:errors path="address.streetAdditional2" />
   </fieldset>
 
-  <!-- Address Fields -->
-  <fieldset>
-    <legend>User</legend>
-
-    <label for="owner.id">Owner id</label>
-    <form:input path="owner.id" class="input-field" />
-    <form:errors path="owner.id" />
-  </fieldset>
-
   <button type="submit">Register Company</button>
 </form:form>
 

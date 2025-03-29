@@ -18,6 +18,8 @@ import pl.matzysz.repository.UserRepository;
 import pl.matzysz.service.CompanyService;
 import pl.matzysz.service.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/register-company")
 public class RegisterCompanyController {
@@ -36,39 +38,44 @@ public class RegisterCompanyController {
     }
 
     @GetMapping
-    public String index(Model model, HttpServletRequest request) {
+    public String index(
+            Model model,
+            HttpServletRequest request,
+            Principal principal
+    ) {
+        User user = userRepository.findByEmail(principal.getName());
+        if (user == null) {
+            return "redirect:/home"; // + errors
+        }
 
-        Company company = new Company();
-        Address address = new Address();
-        company.setOwner(new User());
-        company.setAddress(address);
-        model.addAttribute("company", company);
+        if (user.getCompany() == null) {
+            Company company = new Company();
+            Address address = new Address();
+            company.setOwner(new User());
+            company.setAddress(address);
+            model.addAttribute("company", company);
+        } else {
+            model.addAttribute("company", user.getCompany());
+        }
+
         return  "register-company";
     }
 
     @PostMapping
-    public String register(@ModelAttribute("company") Company company, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "register-company"; // Updated JSP name
+    public String register(
+            @ModelAttribute("company") Company company,
+            BindingResult bindingResult,
+            Model model,
+            Principal principal
+    ) {
+        User user = userRepository.findByEmail(principal.getName());
+        if (user == null) {
+            return "redirect:/home"; // + errors
         }
 
-        // Debugging output
-        System.out.println(
-                "Company Name: " + company.getCompanyName() +
-                        " | NIP: " + company.getNip() +
-                        " | Owner: " + company.getOwner().getEmail() +
-                        " | Country: " + company.getAddress().getCountry() +
-                        " | State: " + company.getAddress().getState() +
-                        " | City: " + company.getAddress().getCity() +
-                        " | ZipCode: " + company.getAddress().getZipCode() +
-                        " | OwnerId: " + company.getOwner().getId()
-        );
-
-
-        long ownerId = company.getOwner().getId();
         company.setActive(false);
         company.setVerified(false);
-        company.setOwner(userService.getUser(ownerId));
+        company.setOwner(user);
         companyService.addCompany(company); // Updated service call
         return "redirect:register-company"; // Redirect to company registration page
     }

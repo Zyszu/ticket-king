@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.matzysz.domain.Company;
 import pl.matzysz.domain.User;
 import pl.matzysz.repository.CompanyRepository;
+import pl.matzysz.repository.RoleRepository;
 import pl.matzysz.repository.UserRepository;
 
 import java.util.List;
@@ -17,15 +18,17 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final UserRepository userRepository;
     private final EntityManager entityManager;
+    private final RoleRepository roleRepository;
 
     @Autowired
     public CompanyServiceImpl(
             CompanyRepository companyRepository,
             UserRepository userRepository,
-            EntityManager entityManager) {
+            EntityManager entityManager, RoleRepository roleRepository) {
         this.companyRepository = companyRepository;
         this.userRepository = userRepository;
         this.entityManager = entityManager;
+        this.roleRepository = roleRepository;
     }
 
     @Transactional
@@ -35,8 +38,10 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
         User owner = userRepository.findById(company.getOwner().getId());
-
         company.setOwner(owner); // Ensure owner is correctly set before saving
+
+        owner.getRoles().add(roleRepository.findByRole("ROLE_PROPRIETOR"));
+        userRepository.save(owner);
 
         if (company.getAddress() != null) {
             company.setAddress(entityManager.merge(company.getAddress())); // Merge address if detached

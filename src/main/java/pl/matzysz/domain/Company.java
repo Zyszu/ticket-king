@@ -16,6 +16,7 @@ public class Company {
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id")
     private User owner;
 
     @NotNull

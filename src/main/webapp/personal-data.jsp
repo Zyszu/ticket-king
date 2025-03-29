@@ -11,10 +11,6 @@
 <form:form method="post" modelAttribute="personalData" action="/personal-data">
   <form:hidden path="id" />
 
-  <label for="userId">User ID:</label>
-  <input type="number" name="userId" />
-  <br/>
-
   <label for="firstName">First Name:</label>
   <form:input path="firstName" />
   <br/>

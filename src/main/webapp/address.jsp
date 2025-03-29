@@ -21,10 +21,6 @@
     <fieldset>
         <legend>Address</legend>
 
-        <label for="userId">User ID:</label>
-        <input type="number" name="userId" />
-        <br/>
-
         <label for="country">Country</label>
         <form:input path="country" class="input-field" />
         <form:errors path="country" />

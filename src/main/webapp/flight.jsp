@@ -1,5 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 
 <html>
 <head>
@@ -9,8 +11,11 @@
 
 <h2>Create a New Flight</h2>
 
-<form:form method="post" modelAttribute="flight" action="/flights">
-  <label for="aircraft">Aircraft:</label>
+<form:form method="POST" action="/flights" modelAttribute="flight">
+  <form:hidden path="id" />
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+  <label for="aircraft">Select Aircraft:</label>
   <form:select path="aircraft.id">
     <form:options items="${aircraftList}" itemValue="id" itemLabel="model" />
   </form:select>
@@ -24,7 +29,7 @@
   <form:input path="airfieldTo" />
   <br/>
 
-  <label for="departure">Departure (YYYY-MM-DDTHH:MM):</label>
+  <label for="departure">Departure (YYYY-MM-DD, HH:MM):</label>
   <form:input path="departure" type="datetime-local" />
   <br/>
 
@@ -37,6 +42,7 @@
   <br/>
 
   <button type="submit">Create Flight</button>
+
 </form:form>
 
 </body>

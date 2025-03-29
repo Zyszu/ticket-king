@@ -41,6 +41,9 @@ public class User {
     )
     private Set<Flight> flights = new HashSet<>(0);
 
+    @OneToOne(mappedBy = "owner")
+    private Company company;
+
 
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
@@ -62,4 +65,8 @@ public class User {
 
     public Set<Flight> getFlights() { return flights; }
     public void setFlights(Set<Flight> flights) { this.flights = flights; }
+
+    public Company getCompany() { return company; }
+    public void setCompany(Company company) { this.company = company; }
+
 }

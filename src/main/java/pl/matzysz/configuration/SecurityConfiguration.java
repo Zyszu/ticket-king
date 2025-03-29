@@ -31,11 +31,11 @@ public class SecurityConfiguration {
     @Bean
     DaoAuthenticationProvider authProvider(){
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
         // for database users
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
-        // for in-memory users
-        //authProvider.setUserDetailsService(userDetailsService());
+
         return authProvider;
     }
 
@@ -49,10 +49,21 @@ public class SecurityConfiguration {
 
         http
                 .authorizeHttpRequests((authz) -> authz
+                        // permit all
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/home**").permitAll()
-                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/access-denied").permitAll()
+                        // permit users
+                        .requestMatchers("/personal-data**").hasAnyRole("USER")
+                        .requestMatchers("/address**").hasAnyRole("USER")
+                        .requestMatchers("/register-company**").hasAnyRole("USER")
+                        // permit proprietors
+                        .requestMatchers("/fleet**").hasAnyRole("PROPRIETOR")
+                        .requestMatchers("/flights**").hasAnyRole("PROPRIETOR")
+                        // permit anonymous
                         .requestMatchers("/login*").anonymous()
+                        .requestMatchers("/register-user*").anonymous() // not the best way to hande that :D
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -64,7 +75,7 @@ public class SecurityConfiguration {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/home    ")
                 )
                 .exceptionHandling(accessDenied -> accessDenied
                         .accessDeniedPage("/access-denied")

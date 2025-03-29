@@ -8,6 +8,8 @@ import pl.matzysz.domain.User;
 import pl.matzysz.service.PersonalDataService;
 import pl.matzysz.service.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/personal-data")
 public class PersonalDataController {
@@ -21,24 +23,37 @@ public class PersonalDataController {
     }
 
     @GetMapping
-    public String showForm(Model model) {
-        model.addAttribute("personalData", new PersonalData());
+    public String showForm(
+            Model model,
+            Principal principal
+    ) {
+        User user = userService.getUserByEmail(principal.getName());
+        if (user == null) {
+            return "redirect:/home"; // + errors
+        }
+
+        if (user.getPersonalData() != null) {
+            model.addAttribute("personalData", user.getPersonalData());
+        } else {
+            model.addAttribute("personalData", new PersonalData());
+        }
+
         return "personal-data";
     }
 
     @PostMapping
-    public String savePersonalData(@ModelAttribute("personalData") PersonalData personalData,
-                                   @RequestParam("userId") Long userId) {
+    public String savePersonalData(
+            @ModelAttribute("personalData") PersonalData personalData,
+            Principal principal
+    ) {
 
-        User user = userService.getUser(userId); // assume this fetches a User entity
-
-        if (user != null) {
-            user.setPersonalData(personalData);
-            userService.editUser(user);
-        } else {
-            // optionally handle invalid user ID
-            System.out.println("Invalid user ID: " + userId);
+        User user = userService.getUserByEmail(principal.getName());
+        if ( user == null) {
+            return "redirect:/home"; // + errors
         }
+
+        user.setPersonalData(personalData);
+        userService.editUser(user);
 
         return "redirect:/personal-data";
     }

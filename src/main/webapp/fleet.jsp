@@ -21,10 +21,6 @@
     <form:input path="model" class="input-field" />
     <form:errors path="model" />
 
-    <label for="companyId">Company Id</label>
-    <form:input path="companyId" class="input-field" />
-    <form:errors path="companyId" />
-
     <button type="submit">Register Aircraft</button>
   </form:form>
 
