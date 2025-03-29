@@ -2,15 +2,22 @@ package pl.matzysz.service;
 
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.matzysz.domain.Company;
+import pl.matzysz.domain.Role;
 import pl.matzysz.domain.User;
 import pl.matzysz.repository.CompanyRepository;
 import pl.matzysz.repository.RoleRepository;
 import pl.matzysz.repository.UserRepository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -46,6 +53,17 @@ public class CompanyServiceImpl implements CompanyService {
         if (company.getAddress() != null) {
             company.setAddress(entityManager.merge(company.getAddress())); // Merge address if detached
         }
+
+//        Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
+//        // Build user's authorities
+//        for (Role role : owner.getRoles()) {
+//            setAuths.add(new SimpleGrantedAuthority(role.getRole()));
+//        }
+//
+//        UsernamePasswordAuthenticationToken auth =
+//                new UsernamePasswordAuthenticationToken(owner, owner.getPassword(), setAuths);
+
+//        SecurityContextHolder.getContext().setAuthentication(auth);
 
         companyRepository.save(company);
     }

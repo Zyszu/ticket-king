@@ -1,5 +1,8 @@
 package pl.matzysz.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +29,15 @@ public class LoginController {
     @GetMapping(value = "/access-denied")
     public String accessDenied() {
         return "access-denied";
+    }
+
+    @GetMapping(value = "/force-logout")
+    public String forceLogout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) session.invalidate();
+        SecurityContextHolder.clearContext();
+
+        return "redirect:/home";
     }
 
 

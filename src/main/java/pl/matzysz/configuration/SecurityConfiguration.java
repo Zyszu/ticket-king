@@ -54,17 +54,19 @@ public class SecurityConfiguration {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/home**").permitAll()
                         .requestMatchers("/access-denied").permitAll()
+                        .requestMatchers("/logout**").permitAll()
                         // permit users
                         .requestMatchers("/personal-data**").hasAnyRole("USER")
                         .requestMatchers("/address**").hasAnyRole("USER")
                         .requestMatchers("/register-company**").hasAnyRole("USER")
                         .requestMatchers("/tickets**").hasAnyRole("USER")
+                        .requestMatchers("/force-logout**").hasAnyRole("USER")
                         // permit proprietors
                         .requestMatchers("/fleet**").hasAnyRole("PROPRIETOR")
                         .requestMatchers("/flights**").hasAnyRole("PROPRIETOR")
                         // permit anonymous
                         .requestMatchers("/login*").anonymous()
-                        .requestMatchers("/register-user*").anonymous() // not the best way to hande that :D
+                        .requestMatchers("/register-user*").anonymous()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -76,7 +78,7 @@ public class SecurityConfiguration {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/home    ")
+                        .logoutSuccessUrl("/home")
                 )
                 .exceptionHandling(accessDenied -> accessDenied
                         .accessDeniedPage("/access-denied")
