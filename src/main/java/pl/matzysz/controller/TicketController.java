@@ -3,12 +3,11 @@ package pl.matzysz.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.matzysz.domain.Company;
 import pl.matzysz.domain.Flight;
 import pl.matzysz.domain.Ticket;
 import pl.matzysz.domain.User;
-import pl.matzysz.repository.TicketRepository;
-import pl.matzysz.repository.UserRepository;
 import pl.matzysz.service.CompanyService;
 import pl.matzysz.service.FlightService;
 import pl.matzysz.service.TicketService;
@@ -17,7 +16,6 @@ import pl.matzysz.service.UserService;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/tickets")
@@ -44,7 +42,8 @@ public class TicketController {
     public String buyTicket(
             @PathVariable("flightId") Long flightId,
             Model model,
-            Principal principal
+            Principal principal,
+            RedirectAttributes  redirectAttributes
             ) {
         User user = userService.getUserByEmail(principal.getName());
         if (user == null) {
@@ -61,8 +60,9 @@ public class TicketController {
             return "redirect:/home"; // + errors
         }
 
-        if (company.getOwner().equals(user)) {
-            return "redirect:/home"; // + errors [proprietor can't buy ticket for own flight]
+        if (company.getId() == user.getCompany().getId()) {
+            redirectAttributes.addFlashAttribute("messageError", "You cannot purchase ticket for your own flight.");
+            return "redirect:/home";
         }
 
         Integer ticketCount = flight.getTicketList().size();
@@ -94,7 +94,8 @@ public class TicketController {
             @ModelAttribute("flightId") Long flightId,
             @ModelAttribute("ticketCount") Integer purchaseTicketCount,
             Model model,
-            Principal principal
+            Principal principal,
+            RedirectAttributes  redirectAttributes
     ) {
         Flight flight = flightService.getFlight(flightId);
         if (flight == null) {
@@ -111,8 +112,9 @@ public class TicketController {
             return "redirect:/home"; // + errors
         }
 
-        if (company.getOwner().equals(user)) {
-            return "redirect:/home"; // + errors [proprietor can't buy ticket for own flight]
+        if (company.getId() == user.getCompany().getId()) {
+            redirectAttributes.addFlashAttribute("messageError", "You cannot purchase ticket for your own flight.");
+            return "redirect:/home";
         }
 
         // check if there are enough empty seats left

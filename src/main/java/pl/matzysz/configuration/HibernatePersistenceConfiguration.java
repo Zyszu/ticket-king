@@ -3,8 +3,11 @@ package pl.matzysz.configuration;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -20,14 +23,30 @@ import java.util.Properties;
 @Configuration
 @EnableJpaRepositories(basePackages = {"pl.matzysz.repository"})
 @EnableTransactionManagement
+@PropertySource("classpath:application.properties")
 public class HibernatePersistenceConfiguration {
+
+    @Value("${ticket-king.db.url}")
+    private String dbUrl;
+
+    @Value("${ticket-king.db.username}")
+    private String dbUsername;
+
+    @Value("${ticket-king.db.password}")
+    private String dbPassword;
 
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
+
+        System.out.println("Credentials");
+        System.out.println(dbUrl);
+        System.out.println(dbUsername);
+        System.out.println(dbPassword);
+
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres?characterEncoding=UTF-8");
-        dataSource.setUsername("mateusz");
+        dataSource.setUrl(dbUrl);
+        dataSource.setUsername(dbUsername);
         dataSource.setPassword("");
         return dataSource;
     }
@@ -64,5 +83,10 @@ public class HibernatePersistenceConfiguration {
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfig() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }
