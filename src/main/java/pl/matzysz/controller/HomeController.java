@@ -22,8 +22,8 @@ public class HomeController {
     @GetMapping
     public String index(Model model) {
         List<Flight> flightList = flightService.listFlight();
-        model.addAttribute("flightList", flightList);
 
+        model.addAttribute("flightList", flightList);
         return "home";
     }
 

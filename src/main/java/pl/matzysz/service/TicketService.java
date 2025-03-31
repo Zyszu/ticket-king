@@ -1,6 +1,7 @@
 package pl.matzysz.service;
 
 import pl.matzysz.domain.Ticket;
+import pl.matzysz.domain.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,4 +13,5 @@ public interface TicketService {
     public List<Ticket> listTicket();
     public void deleteTicket(long id);
     public Optional<Ticket> getTicket(long id);
+    public List<Ticket> getTicketsByUser(User user);
 }

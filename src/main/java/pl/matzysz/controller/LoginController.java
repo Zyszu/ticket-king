@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class LoginController {
@@ -32,11 +33,17 @@ public class LoginController {
     }
 
     @GetMapping(value = "/force-logout")
-    public String forceLogout(HttpServletRequest request) {
+    public String forceLogout(
+            HttpServletRequest request,
+            Model model,
+            RedirectAttributes redirectAttributes
+
+    ) {
         HttpSession session = request.getSession(false);
         if (session != null) session.invalidate();
         SecurityContextHolder.clearContext();
 
+        redirectAttributes.addFlashAttribute("messageInfo", model.getAttribute("messageInfo"));
         return "redirect:/home";
     }
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.matzysz.domain.Ticket;
+import pl.matzysz.domain.User;
 import pl.matzysz.repository.TicketRepository;
 
 import java.util.List;
@@ -50,6 +51,11 @@ public class TicketServiceImpl implements TicketService {
     @Transactional
     public Optional<Ticket> getTicket(long id) {
         return ticketRepository.findById(id);
+    }
+
+    @Transactional
+    public List<Ticket> getTicketsByUser(User user) {
+        return ticketRepository.findAllTicketsByUserWithDetails(user.getId());
     }
 
 }

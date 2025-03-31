@@ -83,7 +83,7 @@ public class TicketController {
             return "redirect:/home"; // + errors
         }
 
-        Set<Ticket> ticketList = user.getTicketList();
+        List<Ticket> ticketList = ticketService.getTicketsByUser(user);
         model.addAttribute("ticketList", ticketList);
 
         return "wallet";

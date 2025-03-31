@@ -3,6 +3,7 @@ package pl.matzysz.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.matzysz.domain.PersonalData;
 import pl.matzysz.domain.User;
 import pl.matzysz.service.PersonalDataService;
@@ -44,7 +45,8 @@ public class PersonalDataController {
     @PostMapping
     public String savePersonalData(
             @ModelAttribute("personalData") PersonalData personalData,
-            Principal principal
+            Principal principal,
+            RedirectAttributes redirectAttributes
     ) {
 
         User user = userService.getUserByEmail(principal.getName());
@@ -55,6 +57,7 @@ public class PersonalDataController {
         user.setPersonalData(personalData);
         userService.editUser(user);
 
-        return "redirect:/personal-data";
+        redirectAttributes.addFlashAttribute("messageInfo", "Your personal data has been saved successfully.");
+        return "redirect:/home";
     }
 }

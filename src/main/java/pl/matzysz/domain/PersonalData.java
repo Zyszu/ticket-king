@@ -15,7 +15,7 @@ public class PersonalData {
     @Size(min = 1, max = 50)
     private String firstName;
 
-    @Size(min = 1, max = 50)
+    @Size(min = 0, max = 50)
     private String secondName;
 
     @NotNull

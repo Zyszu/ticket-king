@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.matzysz.domain.Address;
 import pl.matzysz.domain.Company;
 import pl.matzysz.domain.User;
@@ -48,11 +49,22 @@ public class RegisterCompanyController {
     public String index(
             Model model,
             HttpServletRequest request,
-            Principal principal
+            Principal principal,
+            RedirectAttributes redirectAttributes
     ) {
         User user = userRepository.findByEmail(principal.getName());
         if (user == null) {
             return "redirect:/home"; // + errors
+        }
+
+        if (user.getPersonalData() == null) {
+            redirectAttributes.addFlashAttribute("messageError", "You need to fill your personal data first!");
+            return "redirect:/home";
+        }
+
+        if (user.getAddress() == null) {
+            redirectAttributes.addFlashAttribute("messageError", "You need to fill your address data first!");
+            return "redirect:/home";
         }
 
         if (user.getCompany() == null) {
@@ -73,7 +85,8 @@ public class RegisterCompanyController {
             @ModelAttribute("company") Company company,
             BindingResult bindingResult,
             Model model,
-            Principal principal
+            Principal principal,
+            RedirectAttributes redirectAttributes
     ) {
         User user = userRepository.findByEmail(principal.getName());
         if (user == null) {
@@ -85,6 +98,7 @@ public class RegisterCompanyController {
         company.setOwner(user);
 
         companyVerificationService.startCompanyVerification(company);
+        redirectAttributes.addFlashAttribute("messageInfo", "Your company has been registered and is waiting for verification. You can check your company verification status in your-verifications tab.");
         return "redirect:/force-logout";
     }
 

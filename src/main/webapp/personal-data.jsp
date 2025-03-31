@@ -1,30 +1,76 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Personal Data</title>
+  <title>Personal Data - Ticket King</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
-<h2>Add Personal Data</h2>
+<!-- Navbar -->
+<jsp:include page="/resources/partials/navbar.jsp" />
 
-<form:form method="post" modelAttribute="personalData" action="/personal-data">
-  <form:hidden path="id" />
+<div class="container mt-4">
+  <h3 class="mb-4">Personal Data</h3>
 
-  <label for="firstName">First Name:</label>
-  <form:input path="firstName" />
-  <br/>
+  <!-- Messages -->
+  <c:if test="${not empty messageError}">
+    <div class="alert alert-danger">${messageError}</div>
+  </c:if>
+  <c:if test="${not empty messageInfo}">
+    <div class="alert alert-success">${messageInfo}</div>
+  </c:if>
 
-  <label for="secondName">Second Name:</label>
-  <form:input path="secondName" />
-  <br/>
+  <!-- Personal Data Form -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <form:form method="post" modelAttribute="personalData">
 
-  <label for="lastName">Last Name:</label>
-  <form:input path="lastName" />
-  <br/>
+        <form:hidden path="id" />
 
-  <button type="submit">Save</button>
-</form:form>
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <form:input path="firstName" cssClass="form-control" />
+          <form:errors path="firstName" cssClass="text-danger small" />
+        </div>
+
+        <div class="mb-3">
+          <label for="secondName" class="form-label">First Name</label>
+          <form:input path="secondName" cssClass="form-control" />
+          <form:errors path="secondName" cssClass="text-danger small" />
+        </div>
+
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <form:input path="lastName" cssClass="form-control" />
+          <form:errors path="lastName" cssClass="text-danger small" />
+        </div>
+
+  <%--        <div class="mb-3">--%>
+  <%--          <label for="phoneNumber" class="form-label">Phone Number</label>--%>
+  <%--          <form:input path="phoneNumber" cssClass="form-control" />--%>
+  <%--          <form:errors path="phoneNumber" cssClass="text-danger small" />--%>
+  <%--        </div>--%>
+
+<%--        <div class="mb-3">--%>
+<%--          <label for="birthDate" class="form-label">Birth Date</label>--%>
+<%--          <form:input path="birthDate" cssClass="form-control" type="date" />--%>
+<%--          <form:errors path="birthDate" cssClass="text-danger small" />--%>
+<%--        </div>--%>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-primary">Save Personal Data</button>
+        </div>
+
+      </form:form>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
