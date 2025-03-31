@@ -23,12 +23,16 @@ public class RoleInitializer {
 
         String ROLE_USER = "ROLE_USER";
         String ROLE_PROPRIETOR = "ROLE_PROPRIETOR";
+        String ROLE_NOT_VERIFIED = "ROLE_NOT_VERIFIED";
+        String ROLE_VERIFIED = "ROLE_VERIFIED";
         String ROLE_SUPPORT = "ROLE_SUPPORT";
 
         List<String> roles = new ArrayList<>();
 
         roles.add(ROLE_USER);
         roles.add(ROLE_PROPRIETOR);
+        roles.add(ROLE_NOT_VERIFIED);
+        roles.add(ROLE_VERIFIED);
         roles.add(ROLE_SUPPORT);
 
         // check every essential role listed above

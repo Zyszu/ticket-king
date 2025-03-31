@@ -20,6 +20,7 @@ import pl.matzysz.domain.User;
 import pl.matzysz.repository.CompanyRepository;
 import pl.matzysz.repository.UserRepository;
 import pl.matzysz.service.CompanyService;
+import pl.matzysz.service.CompanyVerificationService;
 import pl.matzysz.service.UserService;
 
 import java.security.Principal;
@@ -31,14 +32,16 @@ public class RegisterCompanyController {
     private final CompanyService companyService;
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
+    private final CompanyVerificationService companyVerificationService;
 
     public RegisterCompanyController(
             CompanyService companyService,
             UserRepository userRepository,
-            CompanyRepository companyRepository) {
+            CompanyRepository companyRepository, CompanyVerificationService companyVerificationService) {
         this.companyService = companyService;
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
+        this.companyVerificationService = companyVerificationService;
     }
 
     @GetMapping
@@ -81,13 +84,8 @@ public class RegisterCompanyController {
         company.setVerified(false);
         company.setOwner(user);
 
-        if (companyRepository.findById(company.getId()) == null) {
-            companyService.addCompany(company);
-            return "redirect:/force-logout";
-        }
-
-        companyService.editCompany(company);
-        return "redirect:/home";
+        companyVerificationService.startCompanyVerification(company);
+        return "redirect:/force-logout";
     }
 
 

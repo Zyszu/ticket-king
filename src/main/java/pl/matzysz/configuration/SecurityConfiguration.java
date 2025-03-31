@@ -4,6 +4,7 @@ import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -49,21 +50,41 @@ public class SecurityConfiguration {
 
         http
                 .authorizeHttpRequests((authz) -> authz
-                        // permit all
+                        // permit ALL
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/home**").permitAll()
                         .requestMatchers("/access-denied").permitAll()
                         .requestMatchers("/logout**").permitAll()
-                        // permit users
+                        // permit IF USER
                         .requestMatchers("/personal-data**").hasAnyRole("USER")
                         .requestMatchers("/address**").hasAnyRole("USER")
-                        .requestMatchers("/register-company**").hasAnyRole("USER")
                         .requestMatchers("/tickets**").hasAnyRole("USER")
                         .requestMatchers("/force-logout**").hasAnyRole("USER")
-                        // permit proprietors
-                        .requestMatchers("/fleet**").hasAnyRole("PROPRIETOR")
-                        .requestMatchers("/flights**").hasAnyRole("PROPRIETOR")
+                        // permit IF USER and not NOT_VERIFIED
+                        .requestMatchers("/register-company**").access((authentication, context) -> {
+                            var auth = authentication.get();
+                            boolean isUser = auth.getAuthorities().stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+                            boolean isNotVerified = auth.getAuthorities().stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_NOT_VERIFIED"));
+
+                            return new AuthorizationDecision(isUser && !isNotVerified);
+                        })
+                        // permit IF PROPRIETOR
+                        .requestMatchers("/verifications/your-verifications*").hasAnyRole("PROPRIETOR")
+                        // permit IF PROPRIETOR and VERIFIED
+                        .requestMatchers("/fleet**",     "/flights**").access((authentication, context) -> {
+                            var auth = authentication.get();
+                            boolean isProprietor = auth.getAuthorities().stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_PROPRIETOR"));
+                            boolean isVerified = auth.getAuthorities().stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_VERIFIED"));
+
+                            return new AuthorizationDecision(isProprietor && isVerified);
+                        })
+                        // permit IF SUPPORT
+                        .requestMatchers("/verifications/verification-panel**").hasAnyRole("SUPPORT")
                         // permit anonymous
                         .requestMatchers("/login*").anonymous()
                         .requestMatchers("/register-user*").anonymous()

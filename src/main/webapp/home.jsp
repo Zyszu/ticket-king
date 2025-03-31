@@ -24,10 +24,22 @@
         <a href="/register-user"> Register user </a>
     </sec:authorize>
 
-    <sec:authorize access="hasRole('ROLE_USER')">
+    <sec:authorize access="hasRole('ROLE_SUPPORT')">
+        <br />
+        <a href="/verifications/verification-panel"> Verification Panel </a>
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('ROLE_USER') and !hasRole('ROLE_NOT_VERIFIED')">
         <br />
         <a href="/register-company"> Register company </a>
+    </sec:authorize>
 
+    <sec:authorize access="hasRole('ROLE_PROPRIETOR')">
+        <br />
+        <a href="/verifications/your-verifications"> Your Company Verifications </a>
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('ROLE_USER')">
         <br />
         <a href="/personal-data">Register personal data</a>
 
@@ -38,7 +50,7 @@
         <a href="/tickets/wallet">Wallet</a>
     </sec:authorize>
 
-    <sec:authorize access="hasRole('ROLE_PROPRIETOR')">
+    <sec:authorize access="hasRole('ROLE_PROPRIETOR') and hasRole('ROLE_VERIFIED')">
         <br />
         <a href="/fleet">Register fleet</a>
 

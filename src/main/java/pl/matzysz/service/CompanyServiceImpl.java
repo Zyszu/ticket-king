@@ -9,9 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.matzysz.domain.Company;
+import pl.matzysz.domain.CompanyVerification;
 import pl.matzysz.domain.Role;
 import pl.matzysz.domain.User;
 import pl.matzysz.repository.CompanyRepository;
+import pl.matzysz.repository.CompanyVerificationRepository;
 import pl.matzysz.repository.RoleRepository;
 import pl.matzysz.repository.UserRepository;
 
@@ -26,63 +28,28 @@ public class CompanyServiceImpl implements CompanyService {
     private final UserRepository userRepository;
     private final EntityManager entityManager;
     private final RoleRepository roleRepository;
+    private final CompanyVerificationRepository companyVerificationRepository;
 
     @Autowired
     public CompanyServiceImpl(
             CompanyRepository companyRepository,
             UserRepository userRepository,
-            EntityManager entityManager, RoleRepository roleRepository) {
+            EntityManager entityManager, RoleRepository roleRepository, CompanyVerificationRepository companyVerificationRepository) {
         this.companyRepository = companyRepository;
         this.userRepository = userRepository;
         this.entityManager = entityManager;
         this.roleRepository = roleRepository;
+        this.companyVerificationRepository = companyVerificationRepository;
     }
 
     @Transactional
-    public void addCompany(Company company) {
-        if (company.getOwner() == null) {
-            throw new IllegalArgumentException("Company must have a valid owner!");
-        }
-
-        User owner = userRepository.findById(company.getOwner().getId());
-        company.setOwner(owner); // Ensure owner is correctly set before saving
-
-        owner.getRoles().add(roleRepository.findByRole("ROLE_PROPRIETOR"));
-        userRepository.save(owner);
-
-        if (company.getAddress() != null) {
-            company.setAddress(entityManager.merge(company.getAddress())); // Merge address if detached
-        }
-
-//        Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-//        // Build user's authorities
-//        for (Role role : owner.getRoles()) {
-//            setAuths.add(new SimpleGrantedAuthority(role.getRole()));
-//        }
-//
-//        UsernamePasswordAuthenticationToken auth =
-//                new UsernamePasswordAuthenticationToken(owner, owner.getPassword(), setAuths);
-
-//        SecurityContextHolder.getContext().setAuthentication(auth);
-
-        companyRepository.save(company);
+    public Company addCompany(Company company) {
+        return companyRepository.save(company);
     }
 
     @Transactional
-    public void editCompany(Company company) {
-        if (company.getOwner() == null) {
-            throw new IllegalArgumentException("Company must have a valid owner!");
-        }
-
-        User owner = userRepository.findById(company.getOwner().getId());
-
-        company.setOwner(owner); // Ensure owner is correctly set
-
-        if (company.getAddress() != null) {
-            company.setAddress(entityManager.merge(company.getAddress())); // Merge address if detached
-        }
-
-        companyRepository.save(company);
+    public Company editCompany(Company company) {
+        return companyRepository.save(company);
     }
 
     @Transactional
@@ -103,6 +70,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Transactional
     public Company getCompanyByName(String name) {
         return companyRepository.findByCompanyName(name);
+    }
+
+    @Transactional
+    public Company getCompanyByOwner(User owner) {
+        return companyRepository.findByOwner(owner);
     }
 
 }

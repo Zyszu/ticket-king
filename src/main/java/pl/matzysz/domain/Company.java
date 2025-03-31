@@ -44,6 +44,11 @@ public class Company {
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     Set<Ticket> ticketList =  new HashSet<>(0);
 
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    Set<CompanyVerification>  verificationList =  new HashSet<>(0);
+
+
+
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
@@ -70,5 +75,8 @@ public class Company {
 
     public Set<Ticket> getTicketList() { return ticketList; }
     public void setTicketList(Set<Ticket> ticketList) { this.ticketList = ticketList; }
+
+    public Set<CompanyVerification> getVerificationList() { return verificationList; }
+    public void setVerificationList(Set<CompanyVerification> verificationList) { this.verificationList = verificationList; }
 
 }
