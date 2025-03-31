@@ -10,6 +10,8 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +25,8 @@ import pl.matzysz.repository.UserRepository;
 import pl.matzysz.service.CompanyService;
 import pl.matzysz.service.CompanyVerificationService;
 import pl.matzysz.service.UserService;
+import pl.matzysz.validator.AddressValidator;
+import pl.matzysz.validator.CompanyValidator;
 
 import java.security.Principal;
 
@@ -34,6 +38,8 @@ public class RegisterCompanyController {
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
     private final CompanyVerificationService companyVerificationService;
+    private final CompanyValidator companyValidator = new CompanyValidator();
+    private final AddressValidator addressValidator = new AddressValidator();
 
     public RegisterCompanyController(
             CompanyService companyService,
@@ -92,6 +98,13 @@ public class RegisterCompanyController {
         if (user == null) {
             return "redirect:/home"; // + errors
         }
+
+        companyValidator.validate(company, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "register-company";
+        }
+
 
         company.setActive(false);
         company.setVerified(false);
