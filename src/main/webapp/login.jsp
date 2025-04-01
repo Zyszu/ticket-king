@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
 <body>
+
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
   <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
     <h3 class="text-center mb-3">Log In</h3>

@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,24 +61,52 @@
     <h4 class="mb-3">Available Flights</h4>
 
     <c:choose>
-        <c:when test="${not empty flightList}">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                <c:forEach var="flight" items="${flightList}">
+        <c:when test="${not empty listFlightDTO}">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+                <c:forEach var="flight" items="${listFlightDTO}">
                     <div class="col">
                         <div class="card h-100 shadow-sm">
                             <div class="card-body">
-                                <h5 class="card-title">${flight.airfieldFrom} -> ${flight.airfieldTo}</h5>
-                                <p class="card-text">
-                                    <strong>From:</strong> ${flight.airfieldTo} <br/>
-                                    <strong>To:</strong> ${flight.airfieldTo} <br/>
-                                    <strong>Departure:</strong> ${flight.departure} <br/>
-                                    <strong>Price:</strong> ${flight.pricePerTicket}$ <br />
-                                    <strong>Available seats:</strong> ${flight.availableSeats}
-                                </p>
+                                <!-- Main Route -->
+                                <h5 class="card-title mb-3">${flight.airfieldFrom} → ${flight.airfieldTo}</h5>
+
+                                <!-- Flight Details -->
+                                <div class="mb-2 small text-muted">
+                                    <div><strong>Carrier:</strong> ${flight.carrier}</div>
+                                    <div><strong>Aircraft Model:</strong> ${flight.aircraftModel}</div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <strong>Departure:</strong>
+                                    <div class="text-dark">
+                                        <fmt:formatDate value="${flight.departure}" pattern="MMMM dd, yyyy 'at' HH:mm" />
+                                    </div>
+                                </div>
+
+                                <!-- Price and Seats -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>Price:</strong> $${flight.pricePerTicket}
+                                    </div>
+                                    <div class="text-muted small">
+                                        <strong>Seats:</strong> ${flight.countTicketsLeft} / ${flight.availableSeats}
+                                    </div>
+                                </div>
                             </div>
+
+                            <!-- Action Button -->
                             <sec:authorize access="hasRole('ROLE_USER')">
                                 <div class="card-footer text-end bg-white border-0">
-                                    <a href="${pageContext.request.contextPath}/tickets/purchase/${flight.id}" class="btn btn-primary btn-sm">Buy Ticket</a>
+                                    <c:choose>
+                                        <c:when test="${flight.countTicketsLeft > 0}">
+                                            <a href="${pageContext.request.contextPath}/tickets/purchase/${flight.id}" class="btn btn-primary btn-sm">
+                                                Buy Ticket
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button class="btn btn-secondary btn-sm" disabled>Sold Out</button>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </sec:authorize>
                         </div>
@@ -89,6 +118,7 @@
             <div class="alert alert-info">No flights available at the moment.</div>
         </c:otherwise>
     </c:choose>
+
 
 </div>
 </body>

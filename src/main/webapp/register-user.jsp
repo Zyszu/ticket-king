@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,15 +9,16 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
 <body>
+
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
   <div class="card shadow-sm p-4" style="width: 100%; max-width: 500px;">
     <h3 class="text-center mb-3">Create Account</h3>
 
     <c:if test="${not empty messageError}">
-      <div class="alert alert-danger">${messageError}</div>
+      <div class="alert alert-danger"><spring:message code="${messageError}" /></div>
     </c:if>
     <c:if test="${not empty messageInfo}">
-      <div class="alert alert-success">${messageInfo}</div>
+      <div class="alert alert-success"><spring:message code="${messageInfo}" /></div>
     </c:if>
 
     <form:form method="post" modelAttribute="user" cssClass="needs-validation" novalidate="novalidate">

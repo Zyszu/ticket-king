@@ -14,7 +14,7 @@
 <!-- Navbar -->
 <jsp:include page="/resources/partials/navbar.jsp" />
 
-<div class="container mt-4">
+<div class="container mt-4 mb-5">
     <h3 class="mb-4">Verification Panel</h3>
 
     <!-- Messages -->

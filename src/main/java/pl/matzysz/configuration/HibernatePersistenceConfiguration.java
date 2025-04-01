@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -37,17 +36,11 @@ public class HibernatePersistenceConfiguration {
 
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
-
-        System.out.println("Credentials");
-        System.out.println(dbUrl);
-        System.out.println(dbUsername);
-        System.out.println(dbPassword);
-
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl(dbUrl);
         dataSource.setUsername(dbUsername);
-        dataSource.setPassword("");
+        dataSource.setPassword(dbPassword);
         return dataSource;
     }
 
@@ -85,8 +78,4 @@ public class HibernatePersistenceConfiguration {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertyConfig() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
 }
