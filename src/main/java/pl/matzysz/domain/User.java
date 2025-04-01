@@ -14,6 +14,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private boolean active;
+
     @NotNull
     @Size(min = 1, max = 100)
     @Column(unique = true)
@@ -41,6 +43,9 @@ public class User {
 
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }

@@ -51,11 +51,12 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((authz) -> authz
                         // permit ALL
-                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/resources/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/home**").permitAll()
                         .requestMatchers("/access-denied").permitAll()
                         .requestMatchers("/logout**").permitAll()
+                        .requestMatchers("/register-user/activate/**").permitAll()
                         // permit IF USER
                         .requestMatchers("/personal-data**").hasAnyRole("USER")
                         .requestMatchers("/address**").hasAnyRole("USER")
@@ -86,8 +87,8 @@ public class SecurityConfiguration {
                         // permit IF SUPPORT
                         .requestMatchers("/verifications/verification-panel**").hasAnyRole("SUPPORT")
                         // permit anonymous
+                        .requestMatchers("/register-user**").anonymous()
                         .requestMatchers("/login*").anonymous()
-                        .requestMatchers("/register-user*").anonymous()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

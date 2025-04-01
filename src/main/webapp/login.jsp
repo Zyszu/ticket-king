@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +21,7 @@
       <div class="alert alert-danger">${messageError}</div>
     </c:if>
     <c:if test="${not empty messageInfo}">
-      <div class="alert alert-info">${messageInfo}</div>
+      <div class="alert alert-info"><spring:message code="${messageInfo}" /></div>
     </c:if>
 
     <c:if test="${not empty error}">

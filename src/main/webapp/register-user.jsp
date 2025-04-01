@@ -42,6 +42,7 @@
 <%--      </div>--%>
 
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+      <input type="hidden" name="active" value="false" />
 
       <button type="submit" class="btn btn-success w-100">Register</button>
     </form:form>
