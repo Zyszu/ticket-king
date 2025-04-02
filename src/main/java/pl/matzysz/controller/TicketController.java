@@ -55,14 +55,17 @@ public class TicketController {
             return "redirect:/home"; // + errors
         }
 
-        Company company = companyService.getCompany(flight.getAircraft().getCompany().getId());
+        long companyId = flight.getAircraft().getCompany().getId();
+        Company company = companyService.getCompany(companyId);
         if (company == null) {
             return "redirect:/home"; // + errors
         }
 
-        if (company.getId() == user.getCompany().getId()) {
-            redirectAttributes.addFlashAttribute("messageError", "You cannot purchase ticket for your own flight.");
-            return "redirect:/home";
+        if (user.getCompany() != null) {
+            if (company.getId() == user.getCompany().getId()) {
+                redirectAttributes.addFlashAttribute("messageError", "error.can.not.buy.yours.ticket");
+                return "redirect:/home";
+            }
         }
 
         Integer ticketCount = flight.getTicketList().size();
@@ -83,6 +86,9 @@ public class TicketController {
             return "redirect:/home"; // + errors
         }
 
+        // this should be using dedicated DTO
+        // in current form pretty departure date and time view
+        // is either hard or overcomplicated
         List<Ticket> ticketList = ticketService.getTicketsByUser(user);
         model.addAttribute("ticketList", ticketList);
 
@@ -112,9 +118,11 @@ public class TicketController {
             return "redirect:/home"; // + errors
         }
 
-        if (company.getId() == user.getCompany().getId()) {
-            redirectAttributes.addFlashAttribute("messageError", "You cannot purchase ticket for your own flight.");
-            return "redirect:/home";
+        if (user.getCompany() != null) {
+            if (company.getId() == user.getCompany().getId()) {
+                redirectAttributes.addFlashAttribute("messageError", "error.can.not.buy.yours.ticket");
+                return "redirect:/home";
+            }
         }
 
         // check if there are enough empty seats left

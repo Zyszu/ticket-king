@@ -1,6 +1,7 @@
 package pl.matzysz.configuration;
 
 import jakarta.annotation.Resource;
+import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -50,6 +51,7 @@ public class SecurityConfiguration {
 
         http
                 .authorizeHttpRequests((authz) -> authz
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         // permit ALL
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/resources/**").permitAll()
                         .requestMatchers("/").permitAll()

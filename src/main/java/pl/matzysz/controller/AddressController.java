@@ -71,7 +71,7 @@ public class AddressController {
         user.setAddress(address);
         userService.editUser(user);
 
-        redirectAttributes.addFlashAttribute("messageInfo", "Your address data has been saved successfully.");
+        redirectAttributes.addFlashAttribute("messageInfo", "info.address.controller.success");
         return "redirect:/home";
     }
 

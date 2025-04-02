@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Create Flight - Ticket King</title>
+  <title><spring:message code="title.flight" /> </title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -16,7 +16,7 @@
 <jsp:include page="/resources/partials/navbar.jsp" />
 
 <div class="container mt-4">
-  <h3 class="mb-4">Create a New Flight</h3>
+  <h3 class="mb-4"><spring:message code="info.flight.new.flight" /></h3>
 
   <div class="card shadow-sm">
     <div class="card-body">
@@ -26,45 +26,45 @@
 
         <!-- Aircraft Selection -->
         <div class="mb-3">
-          <label for="aircraft" class="form-label">Select Aircraft</label>
-          <form:select path="aircraft.id" cssClass="form-select">
+          <label for="aircraft.id" class="form-label"><spring:message code="text.flight.select.aircraft" /></label>
+          <form:select path="aircraft.id" cssClass="form-select" required="required">
             <form:options items="${aircraftList}" itemValue="id" itemLabel="model" />
           </form:select>
         </div>
 
         <!-- Airfield From -->
         <div class="mb-3">
-          <label for="airfieldFrom" class="form-label">Airfield From</label>
-          <form:input path="airfieldFrom" cssClass="form-control" />
+          <label for="airfieldFrom" class="form-label"><spring:message code="text.flight.airfield.from" /></label>
+          <form:input path="airfieldFrom" cssClass="form-control" required="required" />
         </div>
 
         <!-- Airfield To -->
         <div class="mb-3">
-          <label for="airfieldTo" class="form-label">Airfield To</label>
-          <form:input path="airfieldTo" cssClass="form-control" />
+          <label for="airfieldTo" class="form-label"><spring:message code="text.flight.airfield.to" /></label>
+          <form:input path="airfieldTo" cssClass="form-control" required="required" />
         </div>
 
         <!-- Departure -->
         <div class="mb-3">
-          <label for="departure" class="form-label">Departure</label>
-          <form:input path="departure" type="datetime-local" cssClass="form-control" />
+          <label for="departure" class="form-label"><spring:message code="text.flight.departure" /></label>
+          <form:input path="departure" type="datetime-local" cssClass="form-control" required="required" />
         </div>
 
         <!-- Available Seats -->
         <div class="mb-3">
-          <label for="availableSeats" class="form-label">Available Seats</label>
-          <form:input path="availableSeats" type="number" cssClass="form-control" />
+          <label for="availableSeats" class="form-label"><spring:message code="text.flight.available.seats" /></label>
+          <form:input path="availableSeats" type="number" cssClass="form-control" required="required" />
         </div>
 
         <!-- Price per Ticket -->
         <div class="mb-3">
-          <label for="pricePerTicket" class="form-label">Ticket Price</label>
-          <form:input path="pricePerTicket" type="number" step="0.01" cssClass="form-control" />
+          <label for="pricePerTicket" class="form-label"><spring:message code="text.flight.ticket.price" /></label>
+          <form:input path="pricePerTicket" type="number" step="0.01" cssClass="form-control" required="required" />
         </div>
 
         <!-- Submit -->
         <div class="text-end">
-          <button type="submit" class="btn btn-success">Create Flight</button>
+          <button type="submit" class="btn btn-success"><spring:message code="button.flight.create.flight" /></button>
         </div>
       </form:form>
     </div>

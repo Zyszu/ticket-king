@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register - Ticket King</title>
+  <title><spring:message code="title.register.user" /></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
@@ -12,7 +12,7 @@
 
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
   <div class="card shadow-sm p-4" style="width: 100%; max-width: 500px;">
-    <h3 class="text-center mb-3">Create Account</h3>
+    <h3 class="text-center mb-3"><spring:message code="info.register.user.create.account" /></h3>
 
     <c:if test="${not empty messageError}">
       <div class="alert alert-danger"><spring:message code="${messageError}" /></div>
@@ -24,13 +24,13 @@
     <form:form method="post" modelAttribute="user" cssClass="needs-validation" novalidate="novalidate">
 
       <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
+        <label for="email" class="form-label"><spring:message code="text.register.user.email" /></label>
         <form:input path="email" cssClass="form-control" id="email" />
         <form:errors path="email" cssClass="text-danger small" />
       </div>
 
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label"><spring:message code="text.register.user.password" /></label>
         <form:password path="password" cssClass="form-control" id="password" />
         <form:errors path="password" cssClass="text-danger small" />
       </div>
@@ -44,11 +44,11 @@
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
       <input type="hidden" name="active" value="false" />
 
-      <button type="submit" class="btn btn-success w-100">Register</button>
+      <button type="submit" class="btn btn-success w-100"><spring:message code="button.register.user.register" /></button>
     </form:form>
 
     <div class="text-center mt-3">
-      <small>Already have an account? <a href="${pageContext.request.contextPath}/login">Log in</a></small>
+      <small><spring:message code="info.register.user.no.account" /> <a href="${pageContext.request.contextPath}/login"><spring:message code="info.register.user.login.url" /></a></small>
     </div>
   </div>
 </div>

@@ -57,7 +57,7 @@ public class PersonalDataController {
         user.setPersonalData(personalData);
         userService.editUser(user);
 
-        redirectAttributes.addFlashAttribute("messageInfo", "Your personal data has been saved successfully.");
+        redirectAttributes.addFlashAttribute("messageInfo", "info.personal.data.controller.success");
         return "redirect:/home";
     }
 }

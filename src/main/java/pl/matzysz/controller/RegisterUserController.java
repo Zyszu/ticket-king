@@ -94,23 +94,23 @@ public class RegisterUserController {
         }
 
         // create a new user and deactivate account
-        //user.setActive(true);
-        user.setActive(false);
+        user.setActive(true);
+//        user.setActive(false);
         userService.addUser(user);
 
-        // create a user account activation token
-        VerificationToken newToken =  verificationTokenService.generateVerificationToken(user);
-        String appUrl = request.getRequestURL().toString().replace(request.getRequestURI(), request.getContextPath());
-        String tokenUrl = appUrl + "/register-user/activate/" + newToken.getToken();
-
-        // send email with the activation token
-        emailSenderService.sendEmail(
-                user.getEmail(),
-                "Welcome on board!",
-                "Hi, thank you for registering in Ticket King!\n\n" +
-                        "Please activate your account by clicking the link below:\n" +
-                        tokenUrl
-        );
+//        // create a user account activation token
+//        VerificationToken newToken =  verificationTokenService.generateVerificationToken(user);
+//        String appUrl = request.getRequestURL().toString().replace(request.getRequestURI(), request.getContextPath());
+//        String tokenUrl = appUrl + "/register-user/activate/" + newToken.getToken();
+//
+//        // send email with the activation token
+//        emailSenderService.sendEmail(
+//                user.getEmail(),
+//                "Welcome on board!",
+//                "Hi, thank you for registering in Ticket King!\n\n" +
+//                        "Please activate your account by clicking the link below:\n" +
+//                        tokenUrl
+//        );
 
         redirectAttributes.addFlashAttribute("messageInfo", "success.user.do.activate.account");
         return "redirect:/login";

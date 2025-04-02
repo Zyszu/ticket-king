@@ -1,4 +1,5 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <nav class="navbar navbar-expand-lg navbar-custom">
   <div class="container-fluid">
     <a class="navbar-brand" href="${pageContext.request.contextPath}/home">Ticket King</a>
@@ -9,13 +10,13 @@
         <span class="navbar-text">
             <sec:authentication property="name" />
         </span>
-        <a id="logoutbtn" class="btn btn-outline-danger btn-sm">Log out</a>
+        <a id="logoutbtn" class="btn btn-outline-danger btn-sm"><spring:message code="text.navbar.logout" /></a>
       </sec:authorize>
 
       <!-- Guest User Options -->
       <sec:authorize access="!isAuthenticated()">
-        <a href="${pageContext.request.contextPath}/login" class="btn btn-outline-primary btn-sm me-2">Log in</a>
-        <a href="${pageContext.request.contextPath}/register-user" class="btn btn-primary btn-sm">Register</a>
+        <a href="${pageContext.request.contextPath}/login" class="btn btn-outline-primary btn-sm me-2"><spring:message code="text.navbar.login" /></a>
+        <a href="${pageContext.request.contextPath}/register-user" class="btn btn-primary btn-sm"><spring:message code="text.navbar.register" /></a>
       </sec:authorize>
 
     </div>

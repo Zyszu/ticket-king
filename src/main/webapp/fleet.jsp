@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Fleet - Ticket King</title>
+  <title><spring:message code="title.fleet" /></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -16,22 +16,22 @@
 <jsp:include page="/resources/partials/navbar.jsp" />
 
 <div class="container mt-4">
-  <h3 class="mb-4">Fleet Management</h3>
+  <h3 class="mb-4"><spring:message code="info.fleet" /></h3>
 
   <!-- Aircraft Registration Form -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="card-title mb-3">Register New Aircraft</h5>
+      <h5 class="card-title mb-3"><spring:message code="text.register.new.aircraft" /></h5>
       <form:form method="post" action="/fleet" modelAttribute="aircraft">
         <form:hidden path="id" />
 
         <div class="mb-3">
-          <label for="model" class="form-label">Aircraft Name</label>
+          <label for="model" class="form-label"><spring:message code="text.aircraft.name" /></label>
           <form:input path="model" cssClass="form-control" />
           <form:errors path="model" cssClass="text-danger small" />
         </div>
 
-        <button type="submit" class="btn btn-primary">Register Aircraft</button>
+        <button type="submit" class="btn btn-primary"><spring:message code="button.register.aircraft" /></button>
       </form:form>
     </div>
   </div>
@@ -39,15 +39,15 @@
   <!-- Aircraft List Table -->
   <div class="card shadow-sm">
     <div class="card-body">
-      <h5 class="card-title mb-3">Registered Aircraft</h5>
+      <h5 class="card-title mb-3"><spring:message code="info.registered.aircrafts" /></h5>
 
       <c:choose>
         <c:when test="${not empty aircraftList}">
           <table class="table table-bordered table-hover">
             <thead class="table-light">
             <tr>
-              <th>Model</th>
-              <th>ID</th>
+              <th><spring:message code="text.aircraft.model" /></th>
+              <th><spring:message code="text.aircraft.ID" /></th>
               <!-- add more fields as needed -->
             </tr>
             </thead>
@@ -62,7 +62,7 @@
           </table>
         </c:when>
         <c:otherwise>
-          <div class="alert alert-info mb-0">No aircraft registered yet.</div>
+          <div class="alert alert-info mb-0"><spring:message code="text.info.no.aircrafts" /></div>
         </c:otherwise>
       </c:choose>
     </div>

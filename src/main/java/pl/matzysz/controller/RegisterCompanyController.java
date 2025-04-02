@@ -64,12 +64,12 @@ public class RegisterCompanyController {
         }
 
         if (user.getPersonalData() == null) {
-            redirectAttributes.addFlashAttribute("messageError", "You need to fill your personal data first!");
+            redirectAttributes.addFlashAttribute("messageError", "error.register.controller.no.personal.data");
             return "redirect:/home";
         }
 
         if (user.getAddress() == null) {
-            redirectAttributes.addFlashAttribute("messageError", "You need to fill your address data first!");
+            redirectAttributes.addFlashAttribute("messageError", "error.register.controller.no.user.address");
             return "redirect:/home";
         }
 
@@ -111,7 +111,7 @@ public class RegisterCompanyController {
         company.setOwner(user);
 
         companyVerificationService.startCompanyVerification(company);
-        redirectAttributes.addFlashAttribute("messageInfo", "Your company has been registered and is waiting for verification. You can check your company verification status in your-verifications tab.");
+        redirectAttributes.addFlashAttribute("messageInfo", "info.register.controller.success");
         return "redirect:/force-logout";
     }
 
