@@ -4,16 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.matzysz.domain.Company;
-import pl.matzysz.domain.Flight;
-import pl.matzysz.domain.Ticket;
-import pl.matzysz.domain.User;
-import pl.matzysz.service.CompanyService;
-import pl.matzysz.service.FlightService;
-import pl.matzysz.service.TicketService;
-import pl.matzysz.service.UserService;
+import pl.matzysz.domain.*;
+import pl.matzysz.domain.DTO.TicketWrapperDTO;
+import pl.matzysz.service.*;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,17 +21,19 @@ public class TicketController {
     private final UserService userService;
     private final CompanyService companyService;
     private final TicketService ticketService;
+    private final PurchaseService purchaseService;
 
     public TicketController(
             FlightService flightService,
             UserService userService,
             CompanyService companyService,
-            TicketService ticketService
-    ) {
+            TicketService ticketService,
+            PurchaseService purchaseService) {
         this.flightService = flightService;
         this.userService = userService;
         this.companyService = companyService;
         this.ticketService = ticketService;
+        this.purchaseService = purchaseService;
     }
 
     @GetMapping(value = "/purchase/{flightId}")
@@ -90,8 +88,12 @@ public class TicketController {
         // in current form pretty departure date and time view
         // is either hard or overcomplicated
         List<Ticket> ticketList = ticketService.getTicketsByUser(user);
-        model.addAttribute("ticketList", ticketList);
+        List<Ticket> activeTicketList = new ArrayList<>(0);
+        for (Ticket ticket : ticketList) {
+            if (ticket.isPaid()) activeTicketList.add(ticket);
+        }
 
+        model.addAttribute("ticketList", activeTicketList);
         return "wallet";
     }
 
@@ -131,20 +133,65 @@ public class TicketController {
             return "redirect:/home"; // + errors [not enough tickets left]
         }
 
-        List<Ticket> ticketList = new ArrayList<>(0);
+        List<Ticket> listTicket = new ArrayList<>(0);
 
         for (int i = 0; i < purchaseTicketCount; i++) {
             Ticket ticket = new Ticket();
             ticket.setFlight(flight);
             ticket.setUser(user);
             ticket.setCompany(company);
-
-            ticketList.add(ticket);
+            ticket.setIssuedAt(LocalDateTime.now());
+            ticket.setPaid(false);
+            listTicket.add(ticket);
         }
 
-        ticketService.createManyTickets(ticketList);
+        List<Long> listTicketId        = new ArrayList<>(0);
+        List<Ticket> createdTicketList = ticketService.createManyTickets(listTicket);
+        createdTicketList.forEach(ticket -> { listTicketId.add(ticket.getId()); });
 
-        return "redirect:/tickets/purchase/" + flightId;
+        ticketService.createManyTickets(listTicket);
+        purchaseService.startPaymentWindow(listTicketId);
+
+        TicketWrapperDTO ticketWrapperDTO = new TicketWrapperDTO();
+        ticketWrapperDTO.setTicketIds(listTicketId);
+
+        redirectAttributes.addFlashAttribute("ticketWrapperDTO", ticketWrapperDTO);
+        return "redirect:/tickets/purchase/confirm";
+    }
+
+    @GetMapping("/purchase/confirm")
+    public String confirmPaymentPage(
+            Model model
+    ) {
+        TicketWrapperDTO ticketWrapperDTO = (TicketWrapperDTO) model.getAttribute("ticketWrapperDTO");
+        model.addAttribute("ticketWrapperDTO", ticketWrapperDTO);
+        return "confirm-payment";
+    }
+
+    @PostMapping("/purchase/confirm")
+    public String confirmPayment(
+            @ModelAttribute("ticketWrapperDTO") TicketWrapperDTO ticketWrapperDTO,
+            RedirectAttributes redirectAttributes,
+            Principal principal
+    ) {
+        List<Long> listTicketId = ticketWrapperDTO.getTicketIds();
+
+        User currentUser = userService.getUserByEmail(principal.getName());
+        List<Ticket> usersTickets = ticketService.getTicketsByUser(currentUser);
+        List<Long> listUserTicketId = new ArrayList<>(0);
+        usersTickets.forEach(ticket -> { listUserTicketId.add(ticket.getId()); });
+
+        for (Long ticketId : listTicketId) {
+            if (!listUserTicketId.contains(ticketId)) {
+                redirectAttributes.addFlashAttribute("messageError", "error.can.not.be.yours.ticket");
+                return "redirect:/home";
+            }
+        }
+
+
+        purchaseService.confirmPayment(listTicketId);
+        redirectAttributes.addFlashAttribute("messageInfo", "info.payment.confirmed");
+        return "redirect:/home";
     }
 
 }
