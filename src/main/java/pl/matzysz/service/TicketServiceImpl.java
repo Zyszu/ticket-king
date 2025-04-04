@@ -49,13 +49,19 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Transactional
-    public Optional<Ticket> getTicket(long id) {
-        return ticketRepository.findById(id);
+    public Ticket getTicket(long id) {
+        return ticketRepository.findById(id).orElse(null);
     }
 
     @Transactional
     public List<Ticket> getTicketsByUser(User user) {
         return ticketRepository.findAllTicketsByUserWithDetails(user.getId());
     }
+
+    @Transactional
+    public Ticket getTicketWithDetails(long id) {
+        return ticketRepository.findByIdWithDetails(id);
+    }
+
 
 }

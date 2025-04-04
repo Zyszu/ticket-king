@@ -53,10 +53,9 @@ public class PurchaseServiceImpl implements PurchaseService {
                 ticketPaid.remove(ticketId);
                 ticketStartTime.remove(ticketId);
 
-                ticketService.getTicket(ticketId).ifPresent(ticket -> {
-                    ticket.setPaid(true);
-                    ticketService.updateTicket(ticket);
-                });
+                Ticket ticket = ticketService.getTicket(ticketId);
+                ticket.setPaid(true);
+                ticketService.updateTicket(ticket);
             }
         });
 

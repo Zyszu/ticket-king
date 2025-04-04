@@ -52,6 +52,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((authz) -> authz
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                        .requestMatchers("/test").permitAll()
                         // permit ALL
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/resources/**").permitAll()
                         .requestMatchers("/").permitAll()

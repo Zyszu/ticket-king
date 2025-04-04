@@ -27,9 +27,11 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <c:forEach items="${ticketList}" var="ticket">
                     <div class="col">
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm d-flex flex-column justify-content-between">
                             <div class="card-body">
-                                <h5 class="card-title"><spring:message code="info.wallet.flight" />${ticket.flight.id}</h5>
+                                <h5 class="card-title">
+                                    <spring:message code="info.wallet.flight" /> ${ticket.flight.id}
+                                </h5>
                                 <p class="card-text">
                                     <strong><spring:message code="info.wallet.ticket.id" /></strong> ${ticket.id} <br/>
                                     <strong><spring:message code="info.wallet.from" /></strong> ${ticket.flight.airfieldFrom} <br/>
@@ -38,6 +40,13 @@
                                     <strong><spring:message code="info.wallet.departure" /></strong> ${ticket.flight.departure} <br/>
                                     <strong><spring:message code="info.wallet.aircraft" /></strong> ${ticket.flight.aircraft.model}
                                 </p>
+                            </div>
+
+                            <!-- PDF Button in Footer -->
+                            <div class="card-footer bg-white border-0 text-end">
+                                <a href="${pageContext.request.contextPath}/tickets/pdf/${ticket.id}" class="btn btn-outline-secondary btn-sm">
+                                    <i class="bi bi-file-earmark-pdf"></i> <spring:message code="button.generate.pdf" />
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,16 @@
 package pl.matzysz.controller;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,10 +19,16 @@ import pl.matzysz.domain.*;
 import pl.matzysz.domain.DTO.TicketWrapperDTO;
 import pl.matzysz.service.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/tickets")
@@ -192,6 +209,73 @@ public class TicketController {
         purchaseService.confirmPayment(listTicketId);
         redirectAttributes.addFlashAttribute("messageInfo", "info.payment.confirmed");
         return "redirect:/home";
+    }
+
+    @GetMapping("/pdf/{ticketId}")
+    public void pdf(
+            @PathVariable("ticketId") Long ticketId,
+            Principal principal,
+            HttpServletResponse response
+    ) throws Exception {
+
+        // Check if ticket exists
+        Ticket ticket = ticketService.getTicketWithDetails(ticketId);
+        if (ticket == null) {
+            response.sendRedirect(response.encodeRedirectURL("/access-denied"));
+            return;
+        }
+
+        // Check if ticket belongs to the requesting pdf user
+        User user = userService.getUserByEmail(principal.getName());
+        if (ticket.getUser().getId() != user.getId()) {
+            response.sendRedirect(response.encodeRedirectURL("/access-denied"));
+            return;
+        }
+
+
+        // Generate ticket info string
+        String ticketInfo = String.format(
+                "Ticket ID: %d%nFlight: %s → %s%nCarrier: %s%nAircraft: %s%nDeparture: %s",
+                ticket.getId(),
+                ticket.getFlight().getAirfieldFrom(),
+                ticket.getFlight().getAirfieldTo(),
+                ticket.getCompany().getCompanyName(),
+                ticket.getFlight().getAircraft().getModel(),
+                ticket.getFlight().getDeparture().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        );
+
+
+
+        // Setup response headers
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=ticket-" + ticketId + ".pdf");
+
+        // Generate PDF with QR code
+        generatePdfWithQrCode(response.getOutputStream(), ticketInfo);
+    }
+
+    private void generatePdfWithQrCode(ServletOutputStream out, String qrContent) throws Exception {
+        Document document = new Document();
+        PdfWriter.getInstance(document, out);
+        document.open();
+
+        // Add ticket info as text
+        document.add(new Paragraph("Ticket Confirmation", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16)));
+        document.add(new Paragraph(" "));
+        document.add(new Paragraph(qrContent));
+        document.add(new Paragraph(" "));
+
+        // Generate QR code image
+        QRCodeWriter qrWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrWriter.encode(qrContent, BarcodeFormat.QR_CODE, 200, 200);
+        BufferedImage qrImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(qrImage, "png", baos);
+        Image qrPdfImage = Image.getInstance(baos.toByteArray());
+
+        document.add(qrPdfImage);
+        document.close();
     }
 
 }
