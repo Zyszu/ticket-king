@@ -1,0 +1,247 @@
+# -------------- Globals --------------
+button.return.home = Back to Home
+
+
+
+# -------------- CONTROLLERS --------------
+
+# --- RegisterCompanyController ---
+error.register.controller.no.personal.data = You need to fill your personal data first!
+error.register.controller.no.user.address  = You need to fill your address data first!
+info.register.controller.success           = Your company has been registered and is waiting for verification. You can check your company verification status in your-verifications tab.
+
+# --- RegisterUserController ---
+error.captcha.verification.failed = Your CAPTCHA verification has failed. Please try again.
+
+# --- AddressController ---
+info.address.controller.success = Your address data has been saved successfully.
+
+# --- PersonalDataController ---
+info.personal.data.controller.success = Your personal data has been saved successfully.
+
+# --- TicketController ---
+error.can.not.buy.yours.ticket = You cannot purchase ticket for your own flight.
+info.payment.confirmed         = Thank you for the purchase. Your tickets will be soon available in your wallet. Bon Voyage!
+error.can.not.be.yours.ticket  = Wow! It looks like not your tickets were found in the cart. Don't worry you have not been charged with any payment. Please contact support for further information.
+
+# -------------- PARTIALS --------------
+
+
+# --- Partial navbar ---
+text.navbar.login       = Log in
+text.navbar.register    = Register
+text.navbar.logout      = Log out
+
+# -------------- PAGES --------------
+
+
+# --- Page access-denied ---
+info.access.denied          = Access Denied
+info.access.denied.msg1     = You don't have permission to view this page.
+info.access.denied.msg2     = Please contact support if you believe this is an error.
+info.account.verification   = Account Verification
+
+# --- Page activate-account ---
+error.user.verification.token.invalid    = Invalid token
+error.user.verification.token.expired    = Your token has expired. Contact support for more information.
+success.user.verification.token.accepted = Success. Your account has been activated. Bon Voyage!
+success.user.do.activate.account         = Verification link have been sent to your email address. Please use it to activate the account.
+
+# --- Page address ---
+info.address            = Address
+text.address.country    = Country
+text.address.state      = State
+text.address.city       = City
+text.address.zipcode    = Zip Code
+text.address.street     = Street
+text.address.add1       = Street Additional 1
+text.address.add2       = Street Additional 2
+button.text.register    = Register
+
+# --- Page buy-ticket ---
+info.flight                     = Flight Information
+text.buy.ticket.id              = ID
+text.buy.ticket.from            = From
+text.buy.ticket.to              = To
+text.buy.ticket.departure       = Departure
+text.buy.ticket.availableseats  = Available Seats
+text.buy.ticket.seatsremaning   = Seats Remaining
+text.buy.ticket.priceperticket  = Price per Ticket
+info.purchase.tickets           = Purchase Tickets
+text.numberoftickets            = Number of Tickets
+button.text.buy.tickets         = Buy Tickets
+
+# --- Page confirm-payment ---
+info.confirm.payment.confirm.payment    = Confirm Payment
+text.confirm.payment.msg1               = You're about to confirm your ticket purchase.
+text.confirm.payment.msg2               = Please click the button below to proceed.
+button.confirm.payment.confirm          = Confirm Payment
+info.confirm.payment.canceled           = Payment Canceled
+text.confirm.payment.canceled.msg1      = Too much time has passed without confirmation.
+text.confirm.payment.canceled.msg2      = Redirecting to home page in 5 seconds...
+
+# --- Page fleet ---
+info.fleet                  = Fleet Management
+text.register.new.aircraft  = Register New Aircraft
+text.aircraft.name          = Aircraft Name
+button.register.aircraft    = Register Aircraft
+info.registered.aircrafts   = Registered Aircraft
+text.aircraft.model         = Model
+text.aircraft.ID            = ID
+text.info.no.aircrafts      = No aircraft registered yet.
+
+# --- Page flight ---
+info.flight.new.flight = Create a New Flight
+text.flight.select.aircraft = Select Aircraft
+text.flight.airfield.from = Airfield From
+text.flight.airfield.to = Airfield To
+text.flight.departure = Departure
+text.flight.available.seats = Available Seats
+text.flight.ticket.price = Ticket Price
+button.flight.create.flight = Create Flight
+
+# --- Page home ---
+button.home.toggle.nav              = Toggle App Navigation
+button.home.link.wallet             = Wallet
+button.home.link.personal.data      = Personal Data
+button.home.link.address            = Address
+button.home.link.register.company   = Register Company
+button.home.link.fleet              = Fleet
+button.home.link.add.new.flight     = Add New Flight
+button.home.link.your.verifications = Your Verifications
+button.home.link.verify.companies   = Verify Companies
+info.home.available.flights         = Available Flights
+text.home.carrier                   = Carrier:
+text.home.aircraft.model            = Aircraft Model:
+text.home.departure                 = Departure:
+text.home.price                     = Price:
+text.home.seats                     = Seats:
+button.home.buy.ticket              = Buy Ticket
+button.home.sold.out                = Sold Out
+info.home.no.available.flights      = No flights available at the moment.
+
+
+# --- Page login ---
+info.login.login                                = Log In
+info.login.user.logged.out                      = You have been logged out.
+text.login.email                                = Email address
+text.login.password                             = Password
+button.login.login                              = Log In
+text.login.info.don.have.account                = Don't have an account?
+text.login.info.don.have.account.link.register  = Register here
+
+error.invalid.credentials                       = Invalid username and password!
+message.info.successful.logout                  = You've been logged out successfully.
+
+# --- Page personal-data ---
+info.personal.data.personal.data    = Personal Data
+text.personal.data.first.name       = First Name
+text.personal.data.second.name      = Second Name
+text.personal.data.last.name        = Last Name
+button.personal.data.save           = Save Personal Data
+
+# --- Page register-company ---
+info.register.company.register.company      = Register Company
+text.register.company.company.name          = Company Name
+text.register.company.nip                   = NIP
+text.register.company.address               = Address
+text.register.company.country               = Country
+text.register.company.state                 = State
+text.register.company.city                  = City
+text.register.company.zipcode               = Zip Code
+text.register.company.street                = Street
+text.register.company.street.additional1    = Street Additional 1
+text.register.company.street.additional2    = Street Additional 2
+button.register.company.register            = Register Company
+
+error.field.required        = field required
+error.invalid.zipcode       = invalid zip code
+error.invalid.companyname   = invalid company name format
+error.invalid.nip           = invalid nip format
+
+# --- Page register-user ---
+info.register.user.create.account   = Create Account
+text.register.user.email            = Email address
+text.register.user.password         = Password
+button.register.user.register       = Register
+info.register.user.no.account       = Already have an account?
+info.register.user.login.url        = Log in
+
+error.invalid.email                     = invalid email address
+error.invalid.password.length           = password must be at least 8 characters long
+error.invalid.password.special          = password must contain a special character
+error.invalid.password.same.as.email    = password must not be an email
+error.user.email.exists                 = This email is taken
+
+# --- Page verification-case ---
+info.verification.case.verification.case    = Verification Case
+text.verification.case.case.id              = Case ID:
+text.verification.case.owner.mail           = Owner email:
+text.verification.case.company.owner        = Company owner:
+text.verification.case.first.name           = First Name
+text.verification.case.second.name          = Second Name
+text.verification.case.last.name            = Last Name
+text.verification.case.company.data         = Company Data:
+text.verification.case.company.name         = Company Name
+text.verification.case.nip                  = NIP
+text.verification.case.company.address      = Company Address:
+text.verification.case.country              = Country
+text.verification.case.state                = State
+text.verification.case.zipcode              = Zip code
+text.verification.case.city                 = City
+text.verification.case.street               = Street
+text.verification.case.street.additional1   = Street additional 1
+text.verification.case.street.additional2   = Street additional 2
+text.verification.case.support.comment      = Support Comment (optional)
+button.verification.case.accept             = Accept
+button.verification.case.reject             = Reject
+
+# --- Page verification-panel ---
+info.verification.panel.verification.panel  = Verification Panel
+text.verification.panel.case.id             = ID:
+text.verification.panel.case.status         = Status
+text.verification.panel.case.status.waiting = Waiting for verification
+button.verification.panel.view.case         = View Case
+info.verification.panel.no.cases            = There are no more verification request. Good job!
+
+# --- Page wallet ---
+info.wallet.your.tickets    = Your Tickets
+info.wallet.flight          = Flight #
+info.wallet.ticket.id       = Ticket ID:
+info.wallet.from            = From:
+info.wallet.to              = To:
+info.wallet.carrier         = Carrier:
+info.wallet.departure       = Departure:
+info.wallet.aircraft        = Aircraft:
+info.wallet.no.tickets      = You don't have any tickets yet.
+button.generate.pdf         = Generate PDF
+
+# --- Page your-verifications ---
+info.your.verifications.your.verifications      = Your Company Verification Requests
+text.your.verifications.status                  = Status
+text.your.verifications.is.accepted             = Accepted
+text.your.verifications.comment                 = Comment
+text.your.verifications.status.completed        = Completed
+text.your.verifications.status.pending          = Pending
+info.your.verifications.no.verifications        = You have no verification requests yet.
+text.your.verifications.is.accepted.yes         = Yes
+text.your.verifications.is.accepted.no          = No
+text.your.verifications.status.not.completed    = -
+
+# --- Pages titles ---
+title.page.access.denied    = Access Denied - Ticket King
+title.page.activate.account = Account Verification - Ticket King
+title.page.address          = Address - Ticket King
+title.buy.ticket            = Purchase Tickets
+title.confirm.payment       = Confirm Payment - Ticket King
+title.fleet                 = Fleet - Ticket King
+title.flight                = Create Flight - Ticket King
+title.home                  = Home - Ticket King
+title.login                 = Login - Ticket King
+title.personal.data         = Personal Data - Ticket King
+title.register.company      = Register Company - Ticket King
+title.register.user         = Register - Ticket King
+title.verification.case     = Verification Case - Ticket King
+title.verification.panel    = Verification Panel - Ticket King
+title.wallet                = Wallet - Ticket King
+title.your.verifications    = Your Verifications - Ticket King

@@ -1,0 +1,241 @@
+button.return.home = Volver al inicio
+
+# -------------- CONTROLLERS --------------
+
+# --- RegisterCompanyController ---
+error.register.controller.no.personal.data = ¡Primero debes completar tus datos personales!
+error.register.controller.no.user.address  = ¡Primero debes completar tus datos de dirección!
+info.register.controller.success           = Tu empresa ha sido registrada y está esperando verificación. Puedes consultar el estado de verificación en la pestaña "tus verificaciones".
+
+# --- RegisterUserController ---
+error.captcha.verification.failed = La verificación CAPTCHA ha fallado. Por favor, inténtalo de nuevo.
+
+# --- AddressController ---
+info.address.controller.success = Tus datos de dirección se han guardado correctamente.
+
+# --- PersonalDataController ---
+info.personal.data.controller.success = Tus datos personales se han guardado correctamente.
+
+# --- TicketController ---
+error.can.not.buy.yours.ticket = No puedes comprar un billete para tu propio vuelo.
+info.payment.confirmed         = Gracias por tu compra. Tus billetes estarán disponibles pronto en tu billetera. ¡Buen viaje!
+error.can.not.be.yours.ticket  = ¡Vaya! Parece que no se encontraron billetes tuyos en el carrito. No te preocupes, no se ha realizado ningún cargo. Por favor, contacta con soporte para más información.
+
+# -------------- PARTIALS --------------
+
+# --- Partial navbar ---
+text.navbar.login       = Iniciar sesión
+text.navbar.register    = Registrarse
+text.navbar.logout      = Cerrar sesión
+
+# -------------- PAGES --------------
+
+# --- Page access-denied ---
+info.access.denied          = Acceso denegado
+info.access.denied.msg1     = No tienes permiso para ver esta página.
+info.access.denied.msg2     = Por favor, contacta con soporte si crees que esto es un error.
+info.account.verification   = Verificación de cuenta
+
+# --- Page activate-account ---
+error.user.verification.token.invalid    = Token inválido
+error.user.verification.token.expired    = Tu token ha expirado. Contacta con soporte para más información.
+success.user.verification.token.accepted = Éxito. Tu cuenta ha sido activada. ¡Buen viaje!
+success.user.do.activate.account         = Se ha enviado un enlace de verificación a tu correo electrónico. Por favor, úsalo para activar tu cuenta.
+
+# --- Page address ---
+info.address            = Dirección
+text.address.country    = País
+text.address.state      = Estado
+text.address.city       = Ciudad
+text.address.zipcode    = Código postal
+text.address.street     = Calle
+text.address.add1       = Dirección adicional 1
+text.address.add2       = Dirección adicional 2
+button.text.register    = Registrarse
+
+# --- Page buy-ticket ---
+info.flight                     = Información del vuelo
+text.buy.ticket.id              = ID
+text.buy.ticket.from            = Desde
+text.buy.ticket.to              = Hacia
+text.buy.ticket.departure       = Salida
+text.buy.ticket.availableseats  = Asientos disponibles
+text.buy.ticket.seatsremaning   = Asientos restantes
+text.buy.ticket.priceperticket  = Precio por billete
+info.purchase.tickets           = Comprar billetes
+text.numberoftickets            = Número de billetes
+button.text.buy.tickets         = Comprar billetes
+
+# --- Page confirm-payment ---
+info.confirm.payment.confirm.payment    = Confirmar pago
+text.confirm.payment.msg1               = Estás a punto de confirmar la compra de tus billetes.
+text.confirm.payment.msg2               = Por favor, haz clic en el botón de abajo para continuar.
+button.confirm.payment.confirm          = Confirmar pago
+info.confirm.payment.canceled           = Pago cancelado
+text.confirm.payment.canceled.msg1      = Ha pasado demasiado tiempo sin confirmación.
+text.confirm.payment.canceled.msg2      = Redirigiendo a la página principal en 5 segundos...
+
+# --- Page fleet ---
+info.fleet                  = Gestión de flota
+text.register.new.aircraft  = Registrar nueva aeronave
+text.aircraft.name          = Nombre de la aeronave
+button.register.aircraft    = Registrar aeronave
+info.registered.aircrafts   = Aeronaves registradas
+text.aircraft.model         = Modelo
+text.aircraft.ID            = ID
+text.info.no.aircrafts      = Aún no hay aeronaves registradas.
+
+# --- Page flight ---
+info.flight.new.flight = Crear nuevo vuelo
+text.flight.select.aircraft = Seleccionar aeronave
+text.flight.airfield.from = Aeródromo de origen
+text.flight.airfield.to = Aeródromo de destino
+text.flight.departure = Salida
+text.flight.available.seats = Asientos disponibles
+text.flight.ticket.price = Precio del billete
+button.flight.create.flight = Crear vuelo
+
+# --- Page home ---
+button.home.toggle.nav              = Alternar navegación de la aplicación
+button.home.link.wallet             = Billetera
+button.home.link.personal.data      = Datos personales
+button.home.link.address            = Dirección
+button.home.link.register.company   = Registrar empresa
+button.home.link.fleet              = Flota
+button.home.link.add.new.flight     = Añadir nuevo vuelo
+button.home.link.your.verifications = Tus verificaciones
+button.home.link.verify.companies   = Verificar empresas
+info.home.available.flights         = Vuelos disponibles
+text.home.carrier                   = Operador:
+text.home.aircraft.model            = Modelo de aeronave:
+text.home.departure                 = Salida:
+text.home.price                     = Precio:
+text.home.seats                     = Asientos:
+button.home.buy.ticket              = Comprar billete
+button.home.sold.out                = Agotado
+info.home.no.available.flights      = No hay vuelos disponibles en este momento.
+
+# --- Page login ---
+info.login.login                                = Iniciar sesión
+info.login.user.logged.out                      = Has cerrado sesión.
+text.login.email                                = Dirección de correo electrónico
+text.login.password                             = Contraseña
+button.login.login                              = Iniciar sesión
+text.login.info.don.have.account                = ¿No tienes una cuenta?
+text.login.info.don.have.account.link.register  = Regístrate aquí
+
+error.invalid.credentials                       = ¡Usuario o contraseña inválidos!
+message.info.successful.logout                  = Has cerrado sesión con éxito.
+
+# --- Page personal-data ---
+info.personal.data.personal.data    = Datos personales
+text.personal.data.first.name       = Nombre
+text.personal.data.second.name      = Segundo nombre
+text.personal.data.last.name        = Apellido
+button.personal.data.save           = Guardar datos personales
+
+# --- Page register-company ---
+info.register.company.register.company      = Registrar empresa
+text.register.company.company.name          = Nombre de la empresa
+text.register.company.nip                   = NIP
+text.register.company.address               = Dirección
+text.register.company.country               = País
+text.register.company.state                 = Estado
+text.register.company.city                  = Ciudad
+text.register.company.zipcode              = Código postal
+text.register.company.street                = Calle
+text.register.company.street.additional1    = Dirección adicional 1
+text.register.company.street.additional2    = Dirección adicional 2
+button.register.company.register            = Registrar empresa
+
+error.field.required        = campo requerido
+error.invalid.zipcode       = código postal inválido
+error.invalid.companyname   = formato de nombre de empresa inválido
+error.invalid.nip           = formato de NIP inválido
+
+# --- Page register-user ---
+info.register.user.create.account   = Crear cuenta
+text.register.user.email            = Dirección de correo electrónico
+text.register.user.password         = Contraseña
+button.register.user.register       = Registrarse
+info.register.user.no.account       = ¿Ya tienes una cuenta?
+info.register.user.login.url        = Iniciar sesión
+
+error.invalid.email                     = dirección de correo inválida
+error.invalid.password.length           = la contraseña debe tener al menos 8 caracteres
+error.invalid.password.special          = la contraseña debe contener un carácter especial
+error.invalid.password.same.as.email    = la contraseña no debe ser un correo electrónico
+error.user.email.exists                 = Este correo electrónico ya está en uso
+
+# --- Page verification-case ---
+info.verification.case.verification.case    = Caso de verificación
+text.verification.case.case.id              = ID del caso:
+text.verification.case.owner.mail           = Correo del propietario:
+text.verification.case.company.owner        = Dueño de la empresa:
+text.verification.case.first.name           = Nombre
+text.verification.case.second.name          = Segundo nombre
+text.verification.case.last.name            = Apellido
+text.verification.case.company.data         = Datos de la empresa:
+text.verification.case.company.name         = Nombre de la empresa
+text.verification.case.nip                  = NIP
+text.verification.case.company.address      = Dirección de la empresa:
+text.verification.case.country              = País
+text.verification.case.state                = Estado
+text.verification.case.zipcode              = Código postal
+text.verification.case.city                 = Ciudad
+text.verification.case.street               = Calle
+text.verification.case.street.additional1   = Dirección adicional 1
+text.verification.case.street.additional2   = Dirección adicional 2
+text.verification.case.support.comment      = Comentario de soporte (opcional)
+button.verification.case.accept             = Aceptar
+button.verification.case.reject             = Rechazar
+
+# --- Page verification-panel ---
+info.verification.panel.verification.panel  = Panel de verificación
+text.verification.panel.case.id             = ID:
+text.verification.panel.case.status         = Estado
+text.verification.panel.case.status.waiting = Esperando verificación
+button.verification.panel.view.case         = Ver caso
+info.verification.panel.no.cases            = No hay más solicitudes de verificación. ¡Buen trabajo!
+
+# --- Page wallet ---
+info.wallet.your.tickets    = Tus billetes
+info.wallet.flight          = Vuelo #
+info.wallet.ticket.id       = ID del billete:
+info.wallet.from            = Desde:
+info.wallet.to              = Hacia:
+info.wallet.carrier         = Operador:
+info.wallet.departure       = Salida:
+info.wallet.aircraft        = Aeronave:
+info.wallet.no.tickets      = Aún no tienes billetes.
+button.generate.pdf         = Generar PDF
+
+# --- Page your-verifications ---
+info.your.verifications.your.verifications      = Tus solicitudes de verificación de empresa
+text.your.verifications.status                  = Estado
+text.your.verifications.is.accepted             = Aceptado
+text.your.verifications.comment                 = Comentario
+text.your.verifications.status.completed        = Completado
+text.your.verifications.status.pending          = Pendiente
+info.your.verifications.no.verifications        = Aún no tienes solicitudes de verificación.
+text.your.verifications.is.accepted.yes         = Sí
+text.your.verifications.is.accepted.no          = No
+text.your.verifications.status.not.completed    = -
+
+# --- Pages titles ---
+title.page.access.denied    = Acceso denegado - Ticket King
+title.page.activate.account = Verificación de cuenta - Ticket King
+title.page.address          = Dirección - Ticket King
+title.buy.ticket            = Comprar billetes
+title.confirm.payment       = Confirmar pago - Ticket King
+title.fleet                 = Flota - Ticket King
+title.flight                = Crear vuelo - Ticket King
+title.home                  = Inicio - Ticket King
+title.login                 = Iniciar sesión - Ticket King
+title.personal.data         = Datos personales - Ticket King
+title.register.company      = Registrar empresa - Ticket King
+title.register.user         = Registrarse - Ticket King
+title.verification.case     = Caso de verificación - Ticket King
+title.verification.panel    = Panel de verificación - Ticket King
+title.wallet                = Billetera - Ticket King
+title.your.verifications    = Tus verificaciones - Ticket King
