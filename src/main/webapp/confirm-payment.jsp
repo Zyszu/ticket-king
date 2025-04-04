@@ -42,10 +42,10 @@
 </head>
 <body>
 
-<!-- ✅ Navbar -->
+<!-- Navbar -->
 <jsp:include page="/resources/partials/navbar.jsp" />
 
-<!-- ✅ Centered Layout -->
+<!-- Centered Layout -->
 <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="container" style="max-width: 500px;">
         <div class="card shadow-sm p-4 text-center">
@@ -56,7 +56,7 @@
                     <spring:message code="text.confirm.payment.msg2" />
                 </p>
 
-                <!-- ✅ Payment Form -->
+                <!-- Payment Form -->
                 <form:form method="post" modelAttribute="ticketWrapperDTO" action="/tickets/purchase/confirm">
                     <c:forEach var="id" items="${ticketWrapperDTO.ticketIds}" varStatus="status">
                         <form:input type="hidden" path="ticketIds[${status.index}]" value="${id}" />
@@ -68,7 +68,7 @@
     </div>
 </div>
 
-<!-- ✅ Auto-cancel & redirect script -->
+<!-- Auto-cancel & redirect script -->
 <script>
     setTimeout(() => {
         const content = document.getElementById("paymentContent");

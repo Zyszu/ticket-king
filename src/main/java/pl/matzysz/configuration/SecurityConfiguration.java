@@ -52,7 +52,6 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((authz) -> authz
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/test").permitAll()
                         // permit ALL
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/resources/**").permitAll()
                         .requestMatchers("/").permitAll()
@@ -60,6 +59,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/access-denied").permitAll()
                         .requestMatchers("/logout**").permitAll()
                         .requestMatchers("/register-user/activate/**").permitAll()
+                        .requestMatchers("/api/flights**").permitAll()
                         // permit IF USER
                         .requestMatchers("/personal-data**").hasAnyRole("USER")
                         .requestMatchers("/address**").hasAnyRole("USER")
