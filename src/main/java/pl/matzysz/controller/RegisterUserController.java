@@ -1,8 +1,15 @@
 package pl.matzysz.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.matzysz.domain.DTO.RecaptchaResponse;
 import pl.matzysz.domain.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +21,26 @@ import pl.matzysz.service.VerificationTokenService;
 import pl.matzysz.validator.UserValidator;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/register-user")
+@PropertySource("classpath:application.properties")
 public class RegisterUserController {
 
     private final UserService userService;
     private final UserValidator userValidator = new UserValidator();
     private final EmailSenderService emailSenderService;
     private final VerificationTokenService verificationTokenService;
+    private static final String VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify";
+
+    @Value("${google.recaptcha.site.key}")
+    String recaptchaSiteKey;
+
+    @Value("${google.recaptcha.secret.key}")
+    String recaptchaSecret;
+
 
     public RegisterUserController(
             UserService userService,
@@ -38,6 +56,7 @@ public class RegisterUserController {
     public String index(Model model, HttpServletRequest request) {
 
         model.addAttribute("user", new User());
+        model.addAttribute("reCAPTCHASiteKey", recaptchaSiteKey);
         return "register-user";
     }
 
@@ -74,16 +93,25 @@ public class RegisterUserController {
     @PostMapping
     public String register(
             @ModelAttribute("user") User user,
+            @RequestParam("g-recaptcha-response") String recaptchaResponse,
             BindingResult bindingResult,
             HttpServletRequest request,
             RedirectAttributes redirectAttributes,
             Model model
     ) {
 
+        // CAPTCHA
+        if(!this.verify(recaptchaResponse, null)) {
+            model.addAttribute("messageError", "error.captcha.verification.failed");
+            model.addAttribute("reCAPTCHASiteKey", recaptchaSiteKey);
+            return  "register-user";
+        }
+
         // check if user already exists in DB
         User existingUser = userService.getUserByEmail(user.getEmail());
         if (existingUser != null) {
             model.addAttribute("messageError", "error.user.email.exists");
+            model.addAttribute("reCAPTCHASiteKey", recaptchaSiteKey);
             return  "register-user";
         }
 
@@ -114,6 +142,33 @@ public class RegisterUserController {
 
         redirectAttributes.addFlashAttribute("messageInfo", "success.user.do.activate.account");
         return "redirect:/login";
+    }
+
+    private boolean verify(String responseToken, String remoteIp) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("secret", recaptchaSecret);
+        body.add("response", responseToken);
+        if (remoteIp != null) {
+            body.add("remoteip", remoteIp);
+        }
+
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<RecaptchaResponse> response = restTemplate.exchange(
+                VERIFY_URL,
+                HttpMethod.POST,
+                requestEntity,
+                RecaptchaResponse.class
+        );
+
+        RecaptchaResponse recaptcha = response.getBody();
+//        System.out.println("Response from Google: " + recaptcha); // debug
+        return recaptcha != null && recaptcha.isSuccess();
     }
 
 }
