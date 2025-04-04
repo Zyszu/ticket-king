@@ -1,0 +1,14 @@
+ticket-king.db.url=
+ticket-king.db.username=
+ticket-king.db.password=
+
+ticket-king.mail.host=
+ticket-king.mail.port=
+ticket-king.mail.username=
+ticket-king.mail.password=
+ticket-king.mail.protocol=
+ticket-king.mail.properties.mail.smtp.auth=
+ticket-king.mail.properties.mail.smtp.starttls.enable=
+
+google.recaptcha.site.key=
+google.recaptcha.secret.key=
